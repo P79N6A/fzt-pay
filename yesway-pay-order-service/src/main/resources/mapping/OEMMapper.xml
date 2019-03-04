@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yesway.pay.order.dao.OEMDao" >
+  <resultMap id="BaseResultMap" type="cn.yesway.pay.order.entity.OEM" >
+    <id column="oemId" property="oemid" jdbcType="VARCHAR" />
+    <result column="oemName" property="oemname" jdbcType="VARCHAR" />
+    <result column="notifyUrl" property="notifyurl" jdbcType="VARCHAR" />
+    <result column="signKey" property="signkey" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    oemId, oemName, notifyUrl, signKey, createTime, updateTime, creater, updater
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from OEM
+    where oemId = #{oemid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OEM
+    where oemId = #{oemid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.yesway.pay.order.entity.OEM" >
+    insert into OEM (oemId, oemName, notifyUrl, 
+      signKey, createTime, updateTime, 
+      creater, updater)
+    values (#{oemid,jdbcType=VARCHAR}, #{oemname,jdbcType=VARCHAR}, #{notifyurl,jdbcType=VARCHAR}, 
+      #{signkey,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yesway.pay.order.entity.OEM" >
+    insert into OEM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oemid != null" >
+        oemId,
+      </if>
+      <if test="oemname != null" >
+        oemName,
+      </if>
+      <if test="notifyurl != null" >
+        notifyUrl,
+      </if>
+      <if test="signkey != null" >
+        signKey,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oemid != null" >
+        #{oemid,jdbcType=VARCHAR},
+      </if>
+      <if test="oemname != null" >
+        #{oemname,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyurl != null" >
+        #{notifyurl,jdbcType=VARCHAR},
+      </if>
+      <if test="signkey != null" >
+        #{signkey,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yesway.pay.order.entity.OEM" >
+    update OEM
+    <set >
+      <if test="oemname != null" >
+        oemName = #{oemname,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyurl != null" >
+        notifyUrl = #{notifyurl,jdbcType=VARCHAR},
+      </if>
+      <if test="signkey != null" >
+        signKey = #{signkey,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where oemId = #{oemid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yesway.pay.order.entity.OEM" >
+    update OEM
+    set oemName = #{oemname,jdbcType=VARCHAR},
+      notifyUrl = #{notifyurl,jdbcType=VARCHAR},
+      signKey = #{signkey,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR}
+    where oemId = #{oemid,jdbcType=VARCHAR}
+  </update>
+</mapper>

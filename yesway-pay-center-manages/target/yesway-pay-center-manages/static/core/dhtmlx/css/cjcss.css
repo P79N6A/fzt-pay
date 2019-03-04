@@ -1,0 +1,54 @@
+.select-ul {
+	background: url(search-bg.gif) repeat-x top left;
+}
+
+.select-item {
+	padding: 0px 2px;
+	width: 80px;
+	float:left;
+	line-height:30px;
+	vertical-align:middle;
+}
+
+.select-item div {
+	height: 22px;
+	CURSOR: pointer;
+	background: url("search-botton.gif") repeat-y top right;
+}
+
+.select-item span {
+	display: block;
+	text-align: left;
+	padding-top:4px;
+	padding-left:8px;
+	height: 18px;
+	width:100%;
+	border:1px solid;
+}
+
+.select-item:hover div {
+	cursor: hand;
+	background: url("search-botton-hover.gif") repeat-y top right;
+}
+.select_condition {
+	width:100%;
+	display:block ;
+	
+}
+.select_condition li{
+	float:left;
+	list-style-type:none;
+	
+}
+.select_guide{
+	display:block;
+	width: 100%;
+}
+.select_guide span{
+	display:block;
+	width: 90px;
+	height:20px;
+	float:left;
+	CURSOR: pointer;
+}	
+

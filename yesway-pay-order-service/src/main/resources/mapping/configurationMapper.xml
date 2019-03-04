@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yesway.pay.order.dao.ConfigurationDao" >
+  <resultMap id="BaseResultMap" type="cn.yesway.pay.order.entity.Configuration" >
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="key" property="key" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="get" resultMap="BaseResultMap">
+    select 
+    *
+    from configuration
+    where `name` = #{name,jdbcType=VARCHAR}
+      and `key` = #{key,jdbcType=VARCHAR}
+  </select>
+</mapper>

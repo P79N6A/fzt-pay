@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yesway.pay.order.dao.PermissionDao" >
+  <resultMap id="BaseResultMap" type="cn.yesway.pay.order.entity.Permission" >
+    <id column="permissionId" property="permissionid" jdbcType="VARCHAR" />
+    <result column="permissionCode" property="permissioncode" jdbcType="VARCHAR" />
+    <result column="permissionName" property="permissionname" jdbcType="VARCHAR" />
+    <result column="menuCode" property="menucode" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    permissionId, permissionCode, permissionName, menuCode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+    where permissionId = #{permissionid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from permission
+    where permissionId = #{permissionid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.yesway.pay.order.entity.Permission" >
+    insert into permission (permissionId, permissionCode, permissionName, 
+      menuCode)
+    values (#{permissionid,jdbcType=VARCHAR}, #{permissioncode,jdbcType=VARCHAR}, #{permissionname,jdbcType=VARCHAR}, 
+      #{menucode,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yesway.pay.order.entity.Permission" >
+    insert into permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="permissionid != null" >
+        permissionId,
+      </if>
+      <if test="permissioncode != null" >
+        permissionCode,
+      </if>
+      <if test="permissionname != null" >
+        permissionName,
+      </if>
+      <if test="menucode != null" >
+        menuCode,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="permissionid != null" >
+        #{permissionid,jdbcType=VARCHAR},
+      </if>
+      <if test="permissioncode != null" >
+        #{permissioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionname != null" >
+        #{permissionname,jdbcType=VARCHAR},
+      </if>
+      <if test="menucode != null" >
+        #{menucode,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yesway.pay.order.entity.Permission" >
+    update permission
+    <set >
+      <if test="permissioncode != null" >
+        permissionCode = #{permissioncode,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionname != null" >
+        permissionName = #{permissionname,jdbcType=VARCHAR},
+      </if>
+      <if test="menucode != null" >
+        menuCode = #{menucode,jdbcType=INTEGER},
+      </if>
+    </set>
+    where permissionId = #{permissionid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yesway.pay.order.entity.Permission" >
+    update permission
+    set permissionCode = #{permissioncode,jdbcType=VARCHAR},
+      permissionName = #{permissionname,jdbcType=VARCHAR},
+      menuCode = #{menucode,jdbcType=INTEGER}
+    where permissionId = #{permissionid,jdbcType=VARCHAR}
+  </update>
+</mapper>

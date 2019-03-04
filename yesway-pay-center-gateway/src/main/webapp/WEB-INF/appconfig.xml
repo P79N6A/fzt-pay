@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+     <!--  rsa秘钥配置 -->
+      <param key="strPriKey"></param>
+     <!-- 支付宝退款查詢 -->
+      <param key="ALIPAY_REFUND_QUERY">https://mapi.alipay.com/gateway.do?</param>
+     <!--  支付宝退款请求网关地址 -->
+      <param key="alipay_refund_gateway">https://openapi.alipay.com/gateway.do?</param>
+      
+     <!-- 微信支付APPID -->
+     <param key="WEIXIN_APPID">wxcc87001da05f04a0</param>
+     <param key="WEIXIN_MCHID">1422167202</param>
+     <param key="WEIXIN_MCH_API_SECRET">C1C9F937E430476D99E572ADA6C47779</param>
+     <param key="WEIXIN_NOTIFY_URL">http://10.1.20.4/yesway-pay-center-gateway/weixinnotify/weixinNotify_url</param>
+    <!--  微信退款请求地址 -->
+     <param key="WEIXIN.REFUND_URL">https://api.mch.weixin.qq.com/secapi/pay/refund</param>
+     <!-- #交易成功标识 -->
+     <param key="WEIXIN.SUCCESS">SUCCESS</param>
+      <!-- #交易失败标识 -->
+     <param key="WEIXIN.FAIL">FAIL</param>
+</config>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"  
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<util:properties id="enviromentType" location="classpath:/environmentType.properties" />
+	<util:properties id="globalConfig" location="classpath:/#{enviromentType.sys_type}/config.global.properties" />
+	<util:properties id="dbConfig" location="classpath:/#{enviromentType.sys_type}/db.connection.properties" />
+	<util:properties id="config" location="classpath:/#{enviromentType.sys_type}/config.properties" />
+	
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="cn.yesway"> 
+	<context:include-filter 
+		type="annotation" expression="org.springframework.stereotype.Service"/> 
+	</context:component-scan>
+	
+	<context:component-scan base-package="cn.yesway">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+
+       
+	<!-- 上传需要 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+<!-- 	<import resource="classpath*:/applicationContext-dubbo.xml" /> -->
+	<import resource="classpath*:/applicationContext-shiro.xml" />
+	<import resource="classpath*:/applicationContext-datasource.xml" />
+   </beans>

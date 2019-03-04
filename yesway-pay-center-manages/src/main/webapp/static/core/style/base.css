@@ -1,0 +1,10 @@
+@charset "utf-8";
+/* CSS Document */
+
+.layout_viewport{
+	position:absolute;
+	overflow: hidden
+}
+.layout{
+	position:absolute;
+}

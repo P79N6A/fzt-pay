@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.pay.order.dao.PayCenterConfigurationDao">
+
+	<resultMap id="RM_PayCenterConfiguration" type="cn.yesway.pay.order.entity.PayCenterConfiguration">
+        <result property="payConfigId" column="payConfigId"/>
+        <result property="oemId" column="oemId"/>
+        <result property="mchId" column="mchId"/>
+        <result property="mchName" column="mchName"/>
+        <result property="appId" column="appId"/>
+        <result property="weixinMchId" column="weixinMchId"/>
+        <result property="weixinApiSecret" column="weixinApiSecret"/>
+        <result property="notityUrl" column="notityUrl"/>
+        <result property="thirdNotifyUrl" column="thirdNotifyUrl"/>
+        <result property="payToolType" column="payToolType"/>
+        <result property="aesKey" column="aesKey"/>
+        <result property="credentialAdress" column="credentialAdress"/>
+        <result property="yeswayPublicKey" column="yeswayPublicKey"/>
+        <result property="yeswayPrivateKey" column="yeswayPrivateKey"/>
+        <result property="alipayPublicKey" column="alipayPublicKey"/>
+        <result property="yeswayAlipayPrivateKey" column="yeswayAlipayPrivateKey"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		payConfigId,oemId,mchId,mchName,appId,weixinMchId,weixinApiSecret,notityUrl,notifyClient,notifyClientPWD,notifyServer,notifyServerPWD,payToolType,aesKey,credentialAdress,yeswayPublicKey,yeswayPrivateKey,alipayPublicKey,yeswayAlipayPrivateKey,thirdNotifyUrl
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO payCenterConfiguration (
+	        	payConfigId ,
+	        	oemId ,
+	        	mchId ,
+	        	mchName ,
+	        	appId ,
+	        	weixinMchId ,
+	        	weixinApiSecret ,
+	        	notityUrl ,
+	        	payToolType ,
+	        	aesKey ,
+	        	credentialAdress ,
+	        	yeswayPublicKey ,
+	        	yeswayPrivateKey ,
+	        	alipayPublicKey ,
+	        	yeswayAlipayPrivateKey
+	        ) VALUES (
+	        	#{payConfigId} ,
+	        	#{oemId} ,
+	        	#{mchId} ,
+	        	#{mchName} ,
+	        	#{appId} ,
+	        	#{weixinMchId} ,
+	        	#{weixinApiSecret} ,
+	        	#{notityUrl} ,
+	        	#{payToolType} ,
+	        	#{aesKey} ,
+	        	#{credentialAdress}, 
+	        	#{yeswayPublicKey}, 
+	        	#{yeswayPrivateKey}, 
+	        	#{alipayPublicKey},
+	        	#{yeswayAlipayPrivateKey}
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="oemId != null and oemId != ''">
+				oemId = #{oemId} ,
+			</if>
+			<if test="mchId != null and mchId != ''">
+				mchId = #{mchId} ,
+			</if>
+			<if test="mchName != null and mchName != ''">
+				mchName = #{mchName} ,
+			</if>
+			<if test="appId != null and appId != ''">
+				appId = #{appId} ,
+			</if>
+			<if test="weixinMchId != null and weixinMchId != ''">
+				weixinMchId = #{weixinMchId} ,
+			</if>
+			<if test="weixinApiSecret != null and weixinApiSecret != ''">
+				weixinApiSecret = #{weixinApiSecret} ,
+			</if>
+			<if test="notityUrl != null and notityUrl != ''">
+				notityUrl = #{notityUrl} ,
+			</if>
+			<if test="payToolType != null">
+				payToolType = #{payToolType} ,
+			</if>
+			<if test="aesKey != null and aesKey != ''">
+				aesKey = #{aesKey} ,
+			</if>
+			<if test="credentialAdress != null and credentialAdress != ''">
+				credentialAdress = #{credentialAdress} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE payCenterConfiguration
+		<include refid="update_sql" />
+		WHERE
+			payConfigId = #{payConfigId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM payCenterConfiguration 
+        	WHERE  payConfigId = #{payConfigId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_PayCenterConfiguration">
+		SELECT
+		<include refid="columns" />
+		FROM payCenterConfiguration
+		WHERE  payConfigId = #{payConfigId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM payCenterConfiguration
+		<where>
+			<if test="model != null">
+						<if test="model.payConfigId != null and model.payConfigId !=''">
+							AND payConfigId = #{model.payConfigId}
+						</if>
+						<if test="model.oemId != null and model.oemId !=''">
+							AND oemId = #{model.oemId}
+						</if>
+						<if test="model.mchId != null and model.mchId !=''">
+							AND mchId = #{model.mchId}
+						</if>
+						<if test="model.mchName != null and model.mchName !=''">
+							AND mchName = #{model.mchName}
+						</if>
+						<if test="model.appId != null and model.appId !=''">
+							AND appId = #{model.appId}
+						</if>
+						<if test="model.weixinMchId != null and model.weixinMchId !=''">
+							AND weixinMchId = #{model.weixinMchId}
+						</if>
+						<if test="model.weixinApiSecret != null and model.weixinApiSecret !=''">
+							AND weixinApiSecret = #{model.weixinApiSecret}
+						</if>
+						<if test="model.notityUrl != null and model.notityUrl !=''">
+							AND notityUrl = #{model.notityUrl}
+						</if>
+						<if test="model.payToolType != null">
+							AND payToolType = #{model.payToolType}
+						</if>
+						<if test="model.aesKey != null and model.aesKey !=''">
+							AND aesKey = #{model.aesKey}
+						</if>
+						<if test="model.credentialAdress != null and model.credentialAdress !=''">
+							AND credentialAdress = #{model.credentialAdress}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findByCondition" resultMap="RM_PayCenterConfiguration">
+		SELECT
+		<include refid="columns" />
+		FROM  payCenterConfiguration
+		<where>
+					<if test="payConfigId != null and payConfigId !=''">
+						AND payConfigId = #{payConfigId}
+					</if>
+					<if test="oemId != null and oemId !=''">
+						AND oemId = #{oemId}
+					</if>
+					<if test="mchId != null and mchId !=''">
+						AND mchId = #{mchId}
+					</if>
+					<if test="mchName != null and mchName !=''">
+						AND mchName = #{mchName}
+					</if>
+					<if test="appId != null and appId !=''">
+						AND appId = #{appId}
+					</if>
+					<if test="weixinMchId != null and weixinMchId !=''">
+						AND weixinMchId = #{weixinMchId}
+					</if>
+					<if test="weixinApiSecret != null and weixinApiSecret !=''">
+						AND weixinApiSecret = #{weixinApiSecret}
+					</if>
+					<if test="notityUrl != null and notityUrl !=''">
+						AND notityUrl = #{notityUrl}
+					</if>
+					<if test="payToolType != null">
+						AND payToolType = #{payToolType}
+					</if>
+					<if test="aesKey != null and aesKey !=''">
+						AND aesKey = #{aesKey}
+					</if>
+					<if test="credentialAdress != null and credentialAdress !=''">
+						AND credentialAdress = #{credentialAdress}
+					</if>
+		</where>
+	</select>
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_PayCenterConfiguration">
+		SELECT
+		<include refid="columns" />
+		FROM  payCenterConfiguration
+		<where>
+					<if test="payConfigId != null and payConfigId !=''">
+						AND payConfigId = #{payConfigId}
+					</if>
+					<if test="oemId != null and oemId !=''">
+						AND oemId = #{oemId}
+					</if>
+					<if test="mchId != null and mchId !=''">
+						AND mchId = #{mchId}
+					</if>
+					<if test="mchName != null and mchName !=''">
+						AND mchName = #{mchName}
+					</if>
+					<if test="appId != null and appId !=''">
+						AND appId = #{appId}
+					</if>
+					<if test="weixinMchId != null and weixinMchId !=''">
+						AND weixinMchId = #{weixinMchId}
+					</if>
+					<if test="weixinApiSecret != null and weixinApiSecret !=''">
+						AND weixinApiSecret = #{weixinApiSecret}
+					</if>
+					<if test="notityUrl != null and notityUrl !=''">
+						AND notityUrl = #{notityUrl}
+					</if>
+					<if test="payToolType != null">
+						AND payToolType = #{payToolType}
+					</if>
+					<if test="aesKey != null and aesKey !=''">
+						AND aesKey = #{aesKey}
+					</if>
+					<if test="credentialAdress != null and credentialAdress !=''">
+						AND credentialAdress = #{credentialAdress}
+					</if>
+		</where>
+		<!-- <if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if> -->
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_PayCenterConfiguration">
+		SELECT <include refid="columns" />
+		FROM payCenterConfiguration
+		<where>
+			<if test="model != null">
+						<if test="model.payConfigId != null and model.payConfigId !=''">
+							AND payConfigId = #{model.payConfigId}
+						</if>
+						<if test="model.oemId != null and model.oemId !=''">
+							AND oemId = #{model.oemId}
+						</if>
+						<if test="model.mchId != null and model.mchId !=''">
+							AND mchId = #{model.mchId}
+						</if>
+						<if test="model.mchName != null and model.mchName !=''">
+							AND mchName = #{model.mchName}
+						</if>
+						<if test="model.appId != null and model.appId !=''">
+							AND appId = #{model.appId}
+						</if>
+						<if test="model.weixinMchId != null and model.weixinMchId !=''">
+							AND weixinMchId = #{model.weixinMchId}
+						</if>
+						<if test="model.weixinApiSecret != null and model.weixinApiSecret !=''">
+							AND weixinApiSecret = #{model.weixinApiSecret}
+						</if>
+						<if test="model.notityUrl != null and model.notityUrl !=''">
+							AND notityUrl = #{model.notityUrl}
+						</if>
+						<if test="model.payToolType != null">
+							AND payToolType = #{model.payToolType}
+						</if>
+						<if test="model.aesKey != null and model.aesKey !=''">
+							AND aesKey = #{model.aesKey}
+						</if>
+						<if test="model.credentialAdress != null and model.credentialAdress !=''">
+							AND credentialAdress = #{model.credentialAdress}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

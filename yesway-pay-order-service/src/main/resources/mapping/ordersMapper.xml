@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yesway.pay.order.dao.OrdersDao" >
+  <resultMap id="BaseResultMap" type="cn.yesway.pay.order.entity.Orders" >
+    <id column="orderId" property="orderid" jdbcType="VARCHAR" />
+    <result column="oemId" property="oemid" jdbcType="VARCHAR" />
+    <result column="mchId" property="mchid" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="prepay_id" property="prepayId" jdbcType="VARCHAR" />
+    <result column="total_amount" property="totalAmount" jdbcType="INTEGER" />
+    <result column="payToolType" property="paytooltype" jdbcType="INTEGER" />
+    <result column="subject" property="subject" jdbcType="VARCHAR" />
+    <result column="body" property="body" jdbcType="VARCHAR" />
+    <result column="goods_detail" property="goodsDetail" jdbcType="VARCHAR" />
+    <result column="attach" property="attach" jdbcType="VARCHAR" />
+    <result column="spbill_create_ip" property="spbillCreateIp" jdbcType="VARCHAR" />
+    <result column="time_start" property="timeStart" jdbcType="TIMESTAMP" />
+    <result column="time_expire" property="timeExpire" jdbcType="TIMESTAMP" />
+    <result column="trade_type" property="tradeType" jdbcType="VARCHAR" />
+    <result column="device_info" property="deviceInfo" jdbcType="VARCHAR" />
+    <result column="orderStatus" property="orderstatus" jdbcType="INTEGER" />
+    <result column="payStatus" property="paystatus" jdbcType="INTEGER" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    orderId, oemId, mchId, out_trade_no, prepay_id, total_amount, payToolType, subject, 
+    body, goods_detail, attach, spbill_create_ip, time_start, time_expire, trade_type, 
+    device_info, orderStatus, payStatus, trade_no, createTime, updateTime, creater, updater
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  <select id="orderQuery" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  <select id="queryOrdersCount" resultType="int" parameterType="java.lang.String" >
+    select 
+   	count(1)
+    from orders
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orders
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.yesway.pay.order.entity.Orders" >
+    insert into orders (orderId, oemId, mchId, 
+      out_trade_no, prepay_id, total_amount, 
+      payToolType, subject, body, 
+      goods_detail, attach, spbill_create_ip, 
+      time_start, time_expire, trade_type, 
+      device_info, orderStatus, payStatus, 
+      trade_no, createTime, updateTime, 
+      creater, updater)
+    values (#{orderid,jdbcType=VARCHAR}, #{oemid,jdbcType=VARCHAR}, #{mchid,jdbcType=VARCHAR}, 
+      #{outTradeNo,jdbcType=VARCHAR}, #{prepayId,jdbcType=VARCHAR}, #{totalAmount,jdbcType=INTEGER}, 
+      #{paytooltype,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, 
+      #{goodsDetail,jdbcType=VARCHAR}, #{attach,jdbcType=VARCHAR}, #{spbillCreateIp,jdbcType=VARCHAR}, 
+      #{timeStart,jdbcType=TIMESTAMP}, #{timeExpire,jdbcType=TIMESTAMP}, #{tradeType,jdbcType=VARCHAR}, 
+      #{deviceInfo,jdbcType=VARCHAR}, #{orderstatus,jdbcType=INTEGER}, #{paystatus,jdbcType=INTEGER}, 
+      #{tradeNo,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}, 
+      #{creater,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yesway.pay.order.entity.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        orderId,
+      </if>
+      <if test="oemid != null" >
+        oemId,
+      </if>
+      <if test="mchid != null" >
+        mchId,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="prepayId != null" >
+        prepay_id,
+      </if>
+      <if test="totalAmount != null" >
+        total_amount,
+      </if>
+      <if test="paytooltype != null" >
+        payToolType,
+      </if>
+      <if test="subject != null" >
+        subject,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail,
+      </if>
+      <if test="attach != null" >
+        attach,
+      </if>
+      <if test="spbillCreateIp != null" >
+        spbill_create_ip,
+      </if>
+      <if test="timeStart != null" >
+        time_start,
+      </if>
+      <if test="timeExpire != null" >
+        time_expire,
+      </if>
+      <if test="tradeType != null" >
+        trade_type,
+      </if>
+      <if test="deviceInfo != null" >
+        device_info,
+      </if>
+      <if test="orderstatus != null" >
+        orderStatus,
+      </if>
+      <if test="paystatus != null" >
+        payStatus,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="updatetime != null" >
+        updateTime,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="oemid != null" >
+        #{oemid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        #{mchid,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="paytooltype != null" >
+        #{paytooltype,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null" >
+        #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        #{goodsDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="spbillCreateIp != null" >
+        #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStart != null" >
+        #{timeStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeExpire != null" >
+        #{timeExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeType != null" >
+        #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null" >
+        #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null" >
+        #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="closeOrder" parameterType="java.lang.String" >
+   update orders
+   <set>
+   	orderStatus = 2
+   </set>
+   where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+  <!-- 根据outtradeno更新订单表支付状态payStatus -->
+  <update id="updateStatusByCode" parameterType="cn.yesway.pay.order.entity.Orders" >
+    update orders
+    <set >
+       <if test="orderid != null" >
+        orderId = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="oemid != null" >
+        oemId = #{oemid,jdbcType=VARCHAR},
+      </if>
+      <if test="mchid != null" >
+        mchId = #{mchid,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayId != null" >
+        prepay_id = #{prepayId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalAmount != null" >
+        total_amount = #{totalAmount,jdbcType=INTEGER},
+      </if>
+      <if test="paytooltype != null" >
+        payToolType = #{paytooltype,jdbcType=INTEGER},
+      </if>
+      <if test="subject != null" >
+        subject = #{subject,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDetail != null" >
+        goods_detail = #{goodsDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="attach != null" >
+        attach = #{attach,jdbcType=VARCHAR},
+      </if>
+      <if test="spbillCreateIp != null" >
+        spbill_create_ip = #{spbillCreateIp,jdbcType=VARCHAR},
+      </if>
+      <if test="timeStart != null" >
+        time_start = #{timeStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="timeExpire != null" >
+        time_expire = #{timeExpire,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tradeType != null" >
+        trade_type = #{tradeType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        device_info = #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstatus != null" >
+        orderStatus = #{orderstatus,jdbcType=INTEGER},
+      </if>
+      <if test="paystatus != null" >
+        payStatus = #{paystatus,jdbcType=INTEGER},
+      </if>
+      <if test="tradeNo != null" >
+        trade_no = #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yesway.pay.order.entity.Orders" >
+    update orders
+    set oemId = #{oemid,jdbcType=VARCHAR},
+      mchId = #{mchid,jdbcType=VARCHAR},
+      out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      prepay_id = #{prepayId,jdbcType=VARCHAR},
+      total_amount = #{totalAmount,jdbcType=INTEGER},
+      payToolType = #{paytooltype,jdbcType=INTEGER},
+      subject = #{subject,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      goods_detail = #{goodsDetail,jdbcType=VARCHAR},
+      attach = #{attach,jdbcType=VARCHAR},
+      spbill_create_ip = #{spbillCreateIp,jdbcType=VARCHAR},
+      time_start = #{timeStart,jdbcType=TIMESTAMP},
+      time_expire = #{timeExpire,jdbcType=TIMESTAMP},
+      trade_type = #{tradeType,jdbcType=VARCHAR},
+      device_info = #{deviceInfo,jdbcType=VARCHAR},
+      orderStatus = #{orderstatus,jdbcType=INTEGER},
+      payStatus = #{paystatus,jdbcType=INTEGER},
+      trade_no = #{tradeNo,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      updateTime = #{updatetime,jdbcType=TIMESTAMP},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MgtUserDao">
+
+	<resultMap id="RM_MgtUser" type="cn.yesway.bmw.manage.entity.MgtUser">
+        <result property="userId" column="UserId"/>
+        <result property="group" column="Group"/>
+        <result property="loginName" column="LoginName"/>
+        <result property="password" column="Password"/>
+        <result property="firstName" column="FirstName"/>
+        <result property="lastName" column="LastName"/>
+        <result property="title" column="Title"/>
+        <result property="gender" column="Gender"/>
+        <result property="email" column="Email"/>
+        <result property="phoneNumber" column="PhoneNumber"/>
+        <result property="addTime" column="AddTime"/>
+		<result property="appId" column="app_id"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		UserId,`Group`,LoginName,Password,FirstName,LastName,Title,Gender,Email,PhoneNumber,AddTime,app_id
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO MgtUser (
+	        	UserId ,
+	        	`Group` ,
+	        	LoginName ,
+	        	Password ,
+	        	FirstName ,
+	        	LastName ,
+	        	Title ,
+	        	Gender ,
+	        	Email ,
+	        	PhoneNumber ,
+	        	AddTime,
+	        	app_id
+	        ) VALUES (
+	        	#{userId} ,
+	        	#{group} ,
+	        	#{loginName} ,
+	        	#{password} ,
+	        	#{firstName} ,
+	        	#{lastName} ,
+	        	#{title} ,
+	        	#{gender} ,
+	        	#{email} ,
+	        	#{phoneNumber} ,
+	        	#{addTime},
+	        	#{appId}
+	        )
+	    ]]>
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="group != null and group != ''">
+				`Group` = #{group} ,
+			</if>
+			<if test="loginName != null and loginName != ''">
+				LoginName = #{loginName} ,
+			</if>
+			<if test="password != null and password != ''">
+				Password = #{password} ,
+			</if>
+			<if test="firstName != null and firstName != ''">
+				FirstName = #{firstName} ,
+			</if>
+			<if test="lastName != null and lastName != ''">
+				LastName = #{lastName} ,
+			</if>
+			<if test="title != null and title != ''">
+				Title = #{title} ,
+			</if>
+			<if test="gender != null">
+				Gender = #{gender} ,
+			</if>
+			<if test="email != null and email != ''">
+				Email = #{email} ,
+			</if>
+			<if test="phoneNumber != null and phoneNumber != ''">
+				PhoneNumber = #{phoneNumber} ,
+			</if>
+			<if test="addTime != null">
+				AddTime = #{addTime},
+			</if>
+			<if test="appId != null and appId != ''">
+				app_id = #{appId}
+			</if>
+		</set>
+	</sql>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE MgtUser
+		<include refid="update_sql" />
+		WHERE
+			UserId = #{userId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM MgtUser
+        	WHERE  UserId = #{userId}
+    	]]>
+	</delete>
+
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MgtUser">
+		SELECT
+		<include refid="columns" />
+		FROM MgtUser
+		WHERE  UserId = #{userId}
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM MgtUser
+		<where>
+			<if test="model != null">
+						<if test="model.userId != null and model.userId !=''">
+							AND UserId = #{model.userId}
+						</if>
+						<if test="model.group != null and model.group !=''">
+							AND `Group` = #{model.group}
+						</if>
+						<if test="model.loginName != null and model.loginName !=''">
+							AND LoginName = #{model.loginName}
+						</if>
+						<if test="model.password != null and model.password !=''">
+							AND Password = #{model.password}
+						</if>
+						<if test="model.firstName != null and model.firstName !=''">
+							AND FirstName = #{model.firstName}
+						</if>
+						<if test="model.lastName != null and model.lastName !=''">
+							AND LastName = #{model.lastName}
+						</if>
+						<if test="model.title != null and model.title !=''">
+							AND Title = #{model.title}
+						</if>
+						<if test="model.gender != null">
+							AND Gender = #{model.gender}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND Email = #{model.email}
+						</if>
+						<if test="model.phoneNumber != null and model.phoneNumber !=''">
+							AND PhoneNumber = #{model.phoneNumber}
+						</if>
+						<if test="model.addTime != null">
+							AND AddTime = #{model.addTime}
+						</if>
+						<if test="model.appId != null and model.appId !=''">
+							AND app_id = #{model.appId}
+						</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MgtUser">
+		SELECT
+		<include refid="columns" />
+		FROM  MgtUser
+		<where>
+					<if test="userId != null and userId !=''">
+						AND UserId = #{userId}
+					</if>
+					<if test="group != null and group !=''">
+						AND `Group` = #{group}
+					</if>
+					<if test="loginName != null and loginName !=''">
+						AND LoginName = #{loginName}
+					</if>
+					<if test="password != null and password !=''">
+						AND Password = #{password}
+					</if>
+					<if test="firstName != null and firstName !=''">
+						AND FirstName = #{firstName}
+					</if>
+					<if test="lastName != null and lastName !=''">
+						AND LastName = #{lastName}
+					</if>
+					<if test="title != null and title !=''">
+						AND Title = #{title}
+					</if>
+					<if test="gender != null">
+						AND Gender = #{gender}
+					</if>
+					<if test="email != null and email !=''">
+						AND Email = #{email}
+					</if>
+					<if test="phoneNumber != null and phoneNumber !=''">
+						AND PhoneNumber = #{phoneNumber}
+					</if>
+					<if test="addTime != null">
+						AND AddTime = #{addTime}
+					</if>
+					<if test="appId != null and appId !=''">
+						AND app_id = #{appId}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MgtUser">
+		SELECT <include refid="columns" />
+		FROM MgtUser
+		<where>
+			<if test="model != null">
+						<if test="model.userId != null and model.userId !=''">
+							AND UserId = #{model.userId}
+						</if>
+						<if test="model.group != null and model.group !=''">
+							AND `Group` = #{model.group}
+						</if>
+						<if test="model.loginName != null and model.loginName !=''">
+							AND LoginName = #{model.loginName}
+						</if>
+						<if test="model.password != null and model.password !=''">
+							AND Password = #{model.password}
+						</if>
+						<if test="model.firstName != null and model.firstName !=''">
+							AND FirstName = #{model.firstName}
+						</if>
+						<if test="model.lastName != null and model.lastName !=''">
+							AND LastName = #{model.lastName}
+						</if>
+						<if test="model.title != null and model.title !=''">
+							AND Title = #{model.title}
+						</if>
+						<if test="model.gender != null">
+							AND Gender = #{model.gender}
+						</if>
+						<if test="model.email != null and model.email !=''">
+							AND Email = #{model.email}
+						</if>
+						<if test="model.phoneNumber != null and model.phoneNumber !=''">
+							AND PhoneNumber = #{model.phoneNumber}
+						</if>
+						<if test="model.addTime != null">
+							AND AddTime = #{model.addTime}
+						</if>
+						<if test="model.appId != null and model.appId !=''">
+							AND app_id = #{model.appId}
+						</if>
+			</if>
+		</where>
+		limit
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

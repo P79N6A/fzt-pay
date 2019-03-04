@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+	
+	<context:property-placeholder location="classpath*:/log4j.properties" />
+	<!-- 批量声明组件 -->
+	<context:annotation-config />
+
+	<!-- 自动扫描组件 -->
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="cn.yesway"> 
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/> 
+	</context:component-scan>
+	
+    <!-- 存放接口地址的配置文件 -->
+	<util:properties id="enviromentType" location="classpath:/environmentType.properties" />
+	<!-- 加载不同目录下的配置文件 -->
+	<util:properties id="rabbitmqConfig" location="classpath:/#{enviromentType.sys_type}/config.rabbitmq.properties" />
+    <util:properties id="dubboConfig" location="classpath:/#{enviromentType.sys_type}/config.dubbo.properties" />
+    
+    
+    <import resource="classpath*:/rabbitmq.xml" />
+    <import resource="classpath*:/applicationContext-dubbo.xml" />
+    
+</beans>

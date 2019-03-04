@@ -1,0 +1,71 @@
+.menu_table_info {
+	z-index:1000;
+	FONT-SIZE: 12px;
+	color: #FFFFFF;
+	font-family: @ Tahoma, @ 宋体;
+	width: 20px;
+	MARGIN: 0px;
+	padding:0px;
+}
+
+.menu_table {
+	z-index:1000;
+	CURSOR: default;
+	FONT-SIZE: 12px;
+	MARGIN: 0px;
+	padding:0px;
+}
+
+.menu_tr {
+	HEIGHT: 20px;
+	margin: 0px;
+	padding:0px;
+}
+
+.menu_tr_over {
+	BACKGROUND-COLOR: #000080;
+	COLOR: #ffffff;
+	CURSOR: default;
+	FONT-SIZE: 12px;
+	margin:0px;
+	padding:0px;
+}
+
+.menu_tr_out {
+	BACKGROUND-COLOR: #efefef;
+	COLOR: #000000;
+	FONT-SIZE: 12px;
+	margin:0px;
+	padding:0px;
+}
+
+.menu_div_rm {
+	z-index:1000;
+	BACKGROUND-COLOR: #efefef;
+	BORDER-BOTTOM: #ffffff 1px outset;
+	BORDER-LEFT: #ffffff 1px outset;
+	BORDER-RIGHT: #ffffff 1px outset;
+	BORDER-TOP: #ffffff 1px outset;
+	DISPLAY: none;
+	PADDING-BOTTOM: 1px;
+	PADDING-LEFT: 1px;
+	PADDING-RIGHT: 1px;
+	PADDING-TOP: 1px;
+	POSITION: absolute;
+	WIDTH: 150px;
+}
+
+.menu_hr_sperator{
+	WIDTH: 100%;
+	margin:0px;
+	padding:0px;
+}
+
+.w2kfont {
+	FONT-FAMILY: Tahoma;
+	FONT-SIZE: 8pt
+}
+/**/
+.Ipt{line-height:14px; padding:6px 3px; height:auto;}
+.LgBxLst_tb{ }
+.TabOn_163 .IptOnF{background:#FFFFD8;}

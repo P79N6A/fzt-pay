@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+		PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.PayCenterConfigurationDao">
+
+	<resultMap id="RM_PayCenterConfiguration" type="cn.yesway.bmw.manage.entity.PayCenterConfiguration">
+		<result property="payConfigId" column="payConfigId"/>
+		<result property="oemId" column="oemId"/>
+		<result property="mchId" column="mchId"/>
+		<result property="mchName" column="mchName"/>
+		<result property="appId" column="appId"/>
+		<result property="weixinMchId" column="weixinMchId"/>
+		<result property="weixinApiSecret" column="weixinApiSecret"/>
+		<result property="notityUrl" column="notityUrl"/>
+		<result property="payToolType" column="payToolType"/>
+		<result property="aesKey" column="aesKey"/>
+		<result property="credentialAdress" column="credentialAdress"/>
+		<result property="yeswayPublicKey" column="yeswayPublicKey"/>
+		<result property="yeswayPrivateKey" column="yeswayPrivateKey"/>
+		<result property="alipayPublicKey" column="alipayPublicKey"/>
+		<result property="yeswayAlipayPrivateKey" column="yeswayAlipayPrivateKey"/>
+		<result property="thirdNotifyUrl" column="thirdNotifyUrl"/>
+		<result property="notifyServerPWD" column="notifyServerPWD"/>
+		<result property="notifyServer" column="notifyServer"/>
+		<result property="notifyClientPWD" column="notifyClientPWD"/>
+		<result property="notifyClient" column="notifyClient"/>
+	</resultMap>
+
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+		<![CDATA[
+		payConfigId,oemId,mchId,mchName,appId,weixinMchId,weixinApiSecret,notityUrl,payToolType,aesKey,credentialAdress,yeswayPublicKey,yeswayPrivateKey,alipayPublicKey,yeswayAlipayPrivateKey,thirdNotifyUrl,notifyServerPWD,notifyServer,notifyClientPWD,notifyClient
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+		<![CDATA[
+	        INSERT INTO payCenterConfiguration (
+	        	payConfigId ,
+	        	oemId ,
+	        	mchId ,
+	        	mchName ,
+	        	appId ,
+	        	weixinMchId ,
+	        	weixinApiSecret ,
+	        	notityUrl ,
+	        	payToolType ,
+	        	aesKey ,
+	        	credentialAdress ,
+	        	yeswayPublicKey ,
+	        	yeswayPrivateKey ,
+	        	alipayPublicKey ,
+	        	yeswayAlipayPrivateKey ,
+	        	thirdNotifyUrl ,
+	        	notifyServerPWD ,
+	        	notifyServer ,
+	        	notifyClientPWD ,
+	        	notifyClient
+	        ) VALUES (
+	        	#{payConfigId} ,
+	        	#{oemId} ,
+	        	#{mchId} ,
+	        	#{mchName} ,
+	        	#{appId} ,
+	        	#{weixinMchId} ,
+	        	#{weixinApiSecret} ,
+	        	#{notityUrl} ,
+	        	#{payToolType} ,
+	        	#{aesKey} ,
+	        	#{credentialAdress} ,
+	        	#{yeswayPublicKey} ,
+	        	#{yeswayPrivateKey} ,
+	        	#{alipayPublicKey} ,
+	        	#{yeswayAlipayPrivateKey} ,
+	        	#{thirdNotifyUrl} ,
+	        	#{notifyServerPWD} ,
+	        	#{notifyServer} ,
+	        	#{notifyClientPWD} ,
+	        	#{notifyClient}
+	        )
+	    ]]>
+	</insert>
+
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="oemId != null and oemId != ''">
+				oemId = #{oemId} ,
+			</if>
+			<if test="mchId != null and mchId != ''">
+				mchId = #{mchId} ,
+			</if>
+			<if test="mchName != null and mchName != ''">
+				mchName = #{mchName} ,
+			</if>
+			<if test="appId != null and appId != ''">
+				appId = #{appId} ,
+			</if>
+			<if test="weixinMchId != null and weixinMchId != ''">
+				weixinMchId = #{weixinMchId} ,
+			</if>
+			<if test="weixinApiSecret != null and weixinApiSecret != ''">
+				weixinApiSecret = #{weixinApiSecret} ,
+			</if>
+			<if test="notityUrl != null and notityUrl != ''">
+				notityUrl = #{notityUrl} ,
+			</if>
+			<if test="payToolType != null">
+				payToolType = #{payToolType} ,
+			</if>
+			<if test="aesKey != null and aesKey != ''">
+				aesKey = #{aesKey} ,
+			</if>
+			<if test="credentialAdress != null and credentialAdress != ''">
+				credentialAdress = #{credentialAdress} ,
+			</if>
+			<if test="yeswayPublicKey != null and yeswayPublicKey != ''">
+				yeswayPublicKey = #{yeswayPublicKey} ,
+			</if>
+			<if test="yeswayPrivateKey != null and yeswayPrivateKey != ''">
+				yeswayPrivateKey = #{yeswayPrivateKey} ,
+			</if>
+			<if test="alipayPublicKey != null and alipayPublicKey != ''">
+				alipayPublicKey = #{alipayPublicKey} ,
+			</if>
+			<if test="yeswayAlipayPrivateKey != null and yeswayAlipayPrivateKey != ''">
+				yeswayAlipayPrivateKey = #{yeswayAlipayPrivateKey} ,
+			</if>
+			<if test="thirdNotifyUrl != null and thirdNotifyUrl != ''">
+				thirdNotifyUrl = #{thirdNotifyUrl} ,
+			</if>
+			<if test="notifyServerPWD != null and notifyServerPWD != ''">
+				notifyServerPWD = #{notifyServerPWD} ,
+			</if>
+			<if test="notifyServer != null and notifyServer != ''">
+				notifyServer = #{notifyServer} ,
+			</if>
+			<if test="notifyClientPWD != null and notifyClientPWD != ''">
+				notifyClientPWD = #{notifyClientPWD} ,
+			</if>
+			<if test="notifyClient != null and notifyClient != ''">
+				notifyClient = #{notifyClient}
+			</if>
+		</set>
+	</sql>
+
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE payCenterConfiguration
+		<include refid="update_sql" />
+		WHERE
+		payConfigId = #{payConfigId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+		<![CDATA[
+        	DELETE FROM payCenterConfiguration
+        	WHERE  payConfigId = #{payConfigId}
+    	]]>
+	</delete>
+
+	<!-- getById -->
+	<select id="getById" resultMap="RM_PayCenterConfiguration">
+		SELECT
+		<include refid="columns" />
+		FROM payCenterConfiguration
+		WHERE  payConfigId = #{payConfigId}
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM payCenterConfiguration
+		<where>
+			<if test="model != null">
+				<if test="model.payConfigId != null and model.payConfigId !=''">
+					AND payConfigId = #{model.payConfigId}
+				</if>
+				<if test="model.oemId != null and model.oemId !=''">
+					AND oemId = #{model.oemId}
+				</if>
+				<if test="model.mchId != null and model.mchId !=''">
+					AND mchId = #{model.mchId}
+				</if>
+				<if test="model.mchName != null and model.mchName !=''">
+					AND mchName = #{model.mchName}
+				</if>
+				<if test="model.appId != null and model.appId !=''">
+					AND appId = #{model.appId}
+				</if>
+				<if test="model.weixinMchId != null and model.weixinMchId !=''">
+					AND weixinMchId = #{model.weixinMchId}
+				</if>
+				<if test="model.weixinApiSecret != null and model.weixinApiSecret !=''">
+					AND weixinApiSecret = #{model.weixinApiSecret}
+				</if>
+				<if test="model.notityUrl != null and model.notityUrl !=''">
+					AND notityUrl = #{model.notityUrl}
+				</if>
+				<if test="model.payToolType != null">
+					AND payToolType = #{model.payToolType}
+				</if>
+				<if test="model.aesKey != null and model.aesKey !=''">
+					AND aesKey = #{model.aesKey}
+				</if>
+				<if test="model.credentialAdress != null and model.credentialAdress !=''">
+					AND credentialAdress = #{model.credentialAdress}
+				</if>
+				<if test="model.yeswayPublicKey != null and model.yeswayPublicKey !=''">
+					AND yeswayPublicKey = #{model.yeswayPublicKey}
+				</if>
+				<if test="model.yeswayPrivateKey != null and model.yeswayPrivateKey !=''">
+					AND yeswayPrivateKey = #{model.yeswayPrivateKey}
+				</if>
+				<if test="model.alipayPublicKey != null and model.alipayPublicKey !=''">
+					AND alipayPublicKey = #{model.alipayPublicKey}
+				</if>
+				<if test="model.yeswayAlipayPrivateKey != null and model.yeswayAlipayPrivateKey !=''">
+					AND yeswayAlipayPrivateKey = #{model.yeswayAlipayPrivateKey}
+				</if>
+				<if test="model.thirdNotifyUrl != null and model.thirdNotifyUrl !=''">
+					AND thirdNotifyUrl = #{model.thirdNotifyUrl}
+				</if>
+				<if test="model.notifyServerPWD != null and model.notifyServerPWD !=''">
+					AND notifyServerPWD = #{model.notifyServerPWD}
+				</if>
+				<if test="model.notifyServer != null and model.notifyServer !=''">
+					AND notifyServer = #{model.notifyServer}
+				</if>
+				<if test="model.notifyClientPWD != null and model.notifyClientPWD !=''">
+					AND notifyClientPWD = #{model.notifyClientPWD}
+				</if>
+				<if test="model.notifyClient != null and model.notifyClient !=''">
+					AND notifyClient = #{model.notifyClient}
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_PayCenterConfiguration">
+		SELECT
+		<include refid="columns" />
+		FROM  payCenterConfiguration
+		<where>
+			<if test="payConfigId != null and payConfigId !=''">
+				AND payConfigId = #{payConfigId}
+			</if>
+			<if test="oemId != null and oemId !=''">
+				AND oemId = #{oemId}
+			</if>
+			<if test="mchId != null and mchId !=''">
+				AND mchId = #{mchId}
+			</if>
+			<if test="mchName != null and mchName !=''">
+				AND mchName = #{mchName}
+			</if>
+			<if test="appId != null and appId !=''">
+				AND appId = #{appId}
+			</if>
+			<if test="weixinMchId != null and weixinMchId !=''">
+				AND weixinMchId = #{weixinMchId}
+			</if>
+			<if test="weixinApiSecret != null and weixinApiSecret !=''">
+				AND weixinApiSecret = #{weixinApiSecret}
+			</if>
+			<if test="notityUrl != null and notityUrl !=''">
+				AND notityUrl = #{notityUrl}
+			</if>
+			<if test="payToolType != null">
+				AND payToolType = #{payToolType}
+			</if>
+			<if test="aesKey != null and aesKey !=''">
+				AND aesKey = #{aesKey}
+			</if>
+			<if test="credentialAdress != null and credentialAdress !=''">
+				AND credentialAdress = #{credentialAdress}
+			</if>
+			<if test="yeswayPublicKey != null and yeswayPublicKey !=''">
+				AND yeswayPublicKey = #{yeswayPublicKey}
+			</if>
+			<if test="yeswayPrivateKey != null and yeswayPrivateKey !=''">
+				AND yeswayPrivateKey = #{yeswayPrivateKey}
+			</if>
+			<if test="alipayPublicKey != null and alipayPublicKey !=''">
+				AND alipayPublicKey = #{alipayPublicKey}
+			</if>
+			<if test="yeswayAlipayPrivateKey != null and yeswayAlipayPrivateKey !=''">
+				AND yeswayAlipayPrivateKey = #{yeswayAlipayPrivateKey}
+			</if>
+			<if test="thirdNotifyUrl != null and thirdNotifyUrl !=''">
+				AND thirdNotifyUrl = #{thirdNotifyUrl}
+			</if>
+			<if test="notifyServerPWD != null and notifyServerPWD !=''">
+				AND notifyServerPWD = #{notifyServerPWD}
+			</if>
+			<if test="notifyServer != null and notifyServer !=''">
+				AND notifyServer = #{notifyServer}
+			</if>
+			<if test="notifyClientPWD != null and notifyClientPWD !=''">
+				AND notifyClientPWD = #{notifyClientPWD}
+			</if>
+			<if test="notifyClient != null and notifyClient !=''">
+				AND notifyClient = #{notifyClient}
+			</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_PayCenterConfiguration">
+		SELECT <include refid="columns" />
+		FROM payCenterConfiguration
+		<where>
+			<if test="model != null">
+				<if test="model.payConfigId != null and model.payConfigId !=''">
+					AND payConfigId = #{model.payConfigId}
+				</if>
+				<if test="model.oemId != null and model.oemId !=''">
+					AND oemId = #{model.oemId}
+				</if>
+				<if test="model.mchId != null and model.mchId !=''">
+					AND mchId = #{model.mchId}
+				</if>
+				<if test="model.mchName != null and model.mchName !=''">
+					AND mchName = #{model.mchName}
+				</if>
+				<if test="model.appId != null and model.appId !=''">
+					AND appId = #{model.appId}
+				</if>
+				<if test="model.weixinMchId != null and model.weixinMchId !=''">
+					AND weixinMchId = #{model.weixinMchId}
+				</if>
+				<if test="model.weixinApiSecret != null and model.weixinApiSecret !=''">
+					AND weixinApiSecret = #{model.weixinApiSecret}
+				</if>
+				<if test="model.notityUrl != null and model.notityUrl !=''">
+					AND notityUrl = #{model.notityUrl}
+				</if>
+				<if test="model.payToolType != null">
+					AND payToolType = #{model.payToolType}
+				</if>
+				<if test="model.aesKey != null and model.aesKey !=''">
+					AND aesKey = #{model.aesKey}
+				</if>
+				<if test="model.credentialAdress != null and model.credentialAdress !=''">
+					AND credentialAdress = #{model.credentialAdress}
+				</if>
+				<if test="model.yeswayPublicKey != null and model.yeswayPublicKey !=''">
+					AND yeswayPublicKey = #{model.yeswayPublicKey}
+				</if>
+				<if test="model.yeswayPrivateKey != null and model.yeswayPrivateKey !=''">
+					AND yeswayPrivateKey = #{model.yeswayPrivateKey}
+				</if>
+				<if test="model.alipayPublicKey != null and model.alipayPublicKey !=''">
+					AND alipayPublicKey = #{model.alipayPublicKey}
+				</if>
+				<if test="model.yeswayAlipayPrivateKey != null and model.yeswayAlipayPrivateKey !=''">
+					AND yeswayAlipayPrivateKey = #{model.yeswayAlipayPrivateKey}
+				</if>
+				<if test="model.thirdNotifyUrl != null and model.thirdNotifyUrl !=''">
+					AND thirdNotifyUrl = #{model.thirdNotifyUrl}
+				</if>
+				<if test="model.notifyServerPWD != null and model.notifyServerPWD !=''">
+					AND notifyServerPWD = #{model.notifyServerPWD}
+				</if>
+				<if test="model.notifyServer != null and model.notifyServer !=''">
+					AND notifyServer = #{model.notifyServer}
+				</if>
+				<if test="model.notifyClientPWD != null and model.notifyClientPWD !=''">
+					AND notifyClientPWD = #{model.notifyClientPWD}
+				</if>
+				<if test="model.notifyClient != null and model.notifyClient !=''">
+					AND notifyClient = #{model.notifyClient}
+				</if>
+			</if>
+		</where>
+		limit
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

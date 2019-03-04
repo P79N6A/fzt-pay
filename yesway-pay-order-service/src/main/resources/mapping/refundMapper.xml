@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yesway.pay.order.dao.RefundDao" >
+  <resultMap id="BaseResultMap" type="cn.yesway.pay.order.entity.Refund" >
+    <id column="refundID" property="refundid" jdbcType="VARCHAR" />
+    <result column="out_trade_no" property="outTradeNo" jdbcType="VARCHAR" />
+    <result column="orderId" property="orderid" jdbcType="CHAR" />
+    <result column="refundAmount" property="refundamount" jdbcType="DECIMAL" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="endTime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="refundReason" property="refundreason" jdbcType="VARCHAR" />
+    <result column="payOrderNo" property="payOrderNo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    refundID, out_trade_no, orderId, refundAmount, addTime, endTime,payOrderNo, refundReason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from refund
+    where refundID = #{refundid,jdbcType=VARCHAR}
+  </select>
+  <!-- 查询所有的退款记录 -->
+  <select id="selectRefundInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from refund
+    where out_trade_no = #{outTradeNo,jdbcType=VARCHAR}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from refund
+    where refundID = #{refundid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="cn.yesway.pay.order.entity.Refund" >
+    insert into refund (refundID, out_trade_no, orderId, 
+      refundAmount, addTime, endTime, payOrderNo,
+      refundReason)
+    values (#{refundid,jdbcType=VARCHAR}, #{outTradeNo,jdbcType=VARCHAR}, #{orderid,jdbcType=CHAR}, 
+      #{refundamount,jdbcType=DECIMAL}, #{addtime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{payOrderNo,jdbcType=VARCHAR}, #{refundreason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.yesway.pay.order.entity.Refund" >
+    insert into refund
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="refundid != null" >
+        refundID,
+      </if>
+      <if test="outTradeNo != null" >
+        out_trade_no,
+      </if>
+      <if test="orderid != null" >
+        orderId,
+      </if>
+      <if test="refundamount != null" >
+        refundAmount,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="endtime != null" >
+        endTime,
+      </if>
+       <if test="payOrderNo != null" >
+        payOrderNo,
+      </if>
+      <if test="refundreason != null" >
+        refundReason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="refundid != null" >
+        #{refundid,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeNo != null" >
+        #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        #{orderid,jdbcType=CHAR},
+      </if>
+      <if test="refundamount != null" >
+        #{refundamount,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="payOrderNo != null" >
+        #{payOrderNo,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundreason != null" >
+        #{refundreason,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.yesway.pay.order.entity.Refund" >
+    update refund
+    <set >
+      <if test="outTradeNo != null" >
+        out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="orderid != null" >
+        orderId = #{orderid,jdbcType=CHAR},
+      </if>
+      <if test="refundamount != null" >
+        refundAmount = #{refundamount,jdbcType=DECIMAL},
+      </if>
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endTime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="payOrderNo != null" >
+       payOrderNo =  #{payOrderNo,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundreason != null" >
+        refundReason = #{refundreason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where refundID = #{refundid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.yesway.pay.order.entity.Refund" >
+    update refund
+    set out_trade_no = #{outTradeNo,jdbcType=VARCHAR},
+      orderId = #{orderid,jdbcType=CHAR},
+      refundAmount = #{refundamount,jdbcType=DECIMAL},
+      addTime = #{addtime,jdbcType=TIMESTAMP},
+      endTime = #{endtime,jdbcType=TIMESTAMP},
+      payOrderNo = #{payOrderNo,jdbcType=TIMESTAMP},
+      refundReason = #{refundreason,jdbcType=VARCHAR}
+    where refundID = #{refundid,jdbcType=VARCHAR}
+  </update>
+</mapper>

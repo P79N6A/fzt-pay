@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.OEMDao">
+
+	<resultMap id="RM_Oem" type="cn.yesway.bmw.manage.entity.OEM">
+        <result property="oemId" column="oemId"/>
+        <result property="oemName" column="oemName"/>
+        <result property="notifyUrl" column="notifyUrl"/>
+        <result property="signKey" column="signKey"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="creater" column="creater"/>
+        <result property="updater" column="updater"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		oemId,oemName,notifyUrl,signKey,createTime,updateTime,creater,updater
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO OEM (
+	        	oemId ,
+	        	oemName ,
+	        	notifyUrl ,
+	        	signKey ,
+	        	createTime ,
+	        	updateTime ,
+	        	creater ,
+	        	updater 
+	        ) VALUES (
+	        	#{oemId} ,
+	        	#{oemName} ,
+	        	#{notifyUrl} ,
+	        	#{signKey} ,
+	        	#{createTime} ,
+	        	#{updateTime} ,
+	        	#{creater} ,
+	        	#{updater} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="oemName != null and oemName != ''">
+				oemName = #{oemName} ,
+			</if>
+			<if test="notifyUrl != null and notifyUrl != ''">
+				notifyUrl = #{notifyUrl} ,
+			</if>
+			<if test="signKey != null and signKey != ''">
+				signKey = #{signKey} ,
+			</if>
+			<if test="createTime != null">
+				createTime = #{createTime} ,
+			</if>
+			<if test="updateTime != null">
+				updateTime = #{updateTime} ,
+			</if>
+			<if test="creater != null and creater != ''">
+				creater = #{creater} ,
+			</if>
+			<if test="updater != null and updater != ''">
+				updater = #{updater} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE OEM
+		<include refid="update_sql" />
+		WHERE
+			oemId = #{oemId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM OEM 
+        	WHERE  oemId = #{oemId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_Oem">
+		SELECT
+		<include refid="columns" />
+		FROM OEM
+		WHERE  oemId = #{oemId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM OEM
+		<where>
+			<if test="model != null">
+						<if test="model.oemId != null and model.oemId !=''">
+							AND oemId = #{model.oemId}
+						</if>
+						<if test="model.oemName != null and model.oemName !=''">
+							AND oemName = #{model.oemName}
+						</if>
+						<if test="model.notifyUrl != null and model.notifyUrl !=''">
+							AND notifyUrl = #{model.notifyUrl}
+						</if>
+						<if test="model.signKey != null and model.signKey !=''">
+							AND signKey = #{model.signKey}
+						</if>
+						<if test="model.createTime != null">
+							AND createTime = #{model.createTime}
+						</if> 
+						<if test="model.updateTime != null">
+							AND updateTime = #{model.updateTime}
+						</if> 
+						<if test="model.creater != null and model.creater !=''">
+							AND creater = #{model.creater}
+						</if>
+						<if test="model.updater != null and model.updater !=''">
+							AND updater = #{model.updater}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_Oem">
+		SELECT
+		<include refid="columns" />
+		FROM  OEM
+		<where>
+					<if test="oemId != null and oemId !=''">
+						AND oemId = #{oemId}
+					</if>
+					<if test="oemName != null and oemName !=''">
+						AND oemName = #{oemName}
+					</if>
+					<if test="notifyUrl != null and notifyUrl !=''">
+						AND notifyUrl = #{notifyUrl}
+					</if>
+					<if test="signKey != null and signKey !=''">
+						AND signKey = #{signKey}
+					</if>
+					<if test="createTime != null">
+						AND createTime = #{createTime}
+					</if>
+					<if test="updateTime != null">
+						AND updateTime = #{updateTime}
+					</if>
+					<if test="creater != null and creater !=''">
+						AND creater = #{creater}
+					</if>
+					<if test="updater != null and updater !=''">
+						AND updater = #{updater}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_Oem">
+		SELECT <include refid="columns" />
+		FROM OEM
+		<where>
+			<if test="model != null">
+						<if test="model.oemId != null and model.oemId !=''">
+							AND oemId = #{model.oemId}
+						</if>
+						<if test="model.oemName != null and model.oemName !=''">
+							AND oemName = #{model.oemName}
+						</if>
+						<if test="model.notifyUrl != null and model.notifyUrl !=''">
+							AND notifyUrl = #{model.notifyUrl}
+						</if>
+						<if test="model.signKey != null and model.signKey !=''">
+							AND signKey = #{model.signKey}
+						</if>
+						<if test="model.createTime != null">
+							AND createTime = #{model.createTime}
+						</if>
+						<if test="model.updateTime != null">
+							AND updateTime = #{model.updateTime}
+						</if>
+						<if test="model.creater != null and model.creater !=''">
+							AND creater = #{model.creater}
+						</if>
+						<if test="model.updater != null and model.updater !=''">
+							AND updater = #{model.updater}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

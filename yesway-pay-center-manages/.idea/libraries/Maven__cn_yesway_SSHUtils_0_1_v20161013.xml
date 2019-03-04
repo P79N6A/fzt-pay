@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: cn.yesway:SSHUtils:0.1.v20161013">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/yesway/SSHUtils/0.1.v20161013/SSHUtils-0.1.v20161013.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/yesway/SSHUtils/0.1.v20161013/SSHUtils-0.1.v20161013-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/cn/yesway/SSHUtils/0.1.v20161013/SSHUtils-0.1.v20161013-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

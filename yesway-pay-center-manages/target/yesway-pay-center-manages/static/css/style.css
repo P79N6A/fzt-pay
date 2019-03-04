@@ -1,0 +1,84 @@
+/* 全局CSS定义 */
+body { font-family: "微软雅黑"; text-align:center; margin:0 auto; padding:0; background:#a8c7ec; font-size:12px; color:#333; }
+body > div { text-align:center; margin-right:auto; margin-left:auto; }
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td { font-size:12px; color:#333; margin:0; padding:0; }
+html, body { height:100%; }
+body { border-left:solid 1px #286d8a; border-top:solid 1px #286d8a; }
+table {
+*border-collapse:collapse; border-spacing:0; }
+div, form, ul, ol, li, span, p { margin:0; padding:0; border:0; }
+img, a img { border:0; margin:0; padding:0; }
+h1, h2, h3, h4, h5, h6 { margin:0; padding:0; font-size:12px; font-weight:normal; }
+ul, ol, li { list-style:none }
+table, td, input { font-size:12px; padding:0 }
+/* 默认链接颜色 */
+a { outline-style:none; color:#333; text-decoration:none }
+a:hover { color:#c00; text-decoration:underline; }
+/*清除链接虚框*/
+/*a,area {blr:expression(this.onFocus=this.blur()) }  for IE 
+:focus {-moz-outline-style: none; }  for Firefox   
+*/
+
+
+/* 颜色 */
+.red, .red a { color:#c00!important; text-decoration:none; }
+.red a:hover { color:#c00!important; text-decoration:underline; }
+.blue, .blue a { color:#173ee8!important; text-decoration:none }
+.blue a:hover { color:#173ee8!important; text-decoration:underline }
+.black, .black a { color:#000!important; text-decoration:none }
+.black a:hover { color:#000!important; text-decoration:underline }
+.white { background:#fff; }
+/* 通用属性 */
+.left { float:left; }
+.right { float:right; }
+.clear { clear:both; font-size:1px; width:1px; height:0; visibility:hidden; margin-top:0px!important; *margin-top:-1px;
+line-height:0 }/*ie and firefox1.5 updata */
+/*文字对齐方式*/
+.txtLeft { text-align:left }
+.txtRight { text-align:right }
+.txtCenter { text-align:center }
+/*常用方法*/
+.show { display:block }
+.hidden { display:none }
+.hand { cursor:pointer; }
+.fontArial { font-family:'Arial'; }
+.b { font-weight:bold; }
+ 
+/*视频显示处*/
+ #dyleft { margin-right: 290px; } 
+/* #dyleft{width:770px;height:520px;margin:auto;background:url(img/mam.png);position: relative;text-align:center;}  */
+#mviewl{width:488px;height:474px;margin:10px 0 0 5px;background:url(img/mviewl.png);float:left;}
+#obj{width:468px;height:420px;margin:10px 0 0 0px;display:block;}
+
+
+#dyright { float:right; width:280px; height:100%; }
+.bnav { text-align:left; height:45px; overflow:hidden; width:100%; line-height:45px; background: url(../images/gdbg.gif);
+margin:0 auto; border:#286d8a 1px solid; border-top:none; z-index:999; position:fixed; bottom:0; left:0; _position:absolute;/* for IE6 */
+_top: expression(documentElement.scrollTop + documentElement.clientHeight-this.offsetHeight); /* for IE6 */overflow:visible; }
+.bnav ul { height:45px; float:left; margin-left:10px; }
+.bnav ul li { width:auto; margin-left:10px; height:45px; float:left; color:#fff; }
+.bnav ul li img { float:left; margin-top:8px; }
+.bnav ul li a { float:left; line-height:45px; color:#fff; padding-left:5px;}
+.gxa { background:url(../images/gxa.gif) right center no-repeat; }
+.video_tree { width:258px; height:90%; float:left; border:solid 1px #748a9b; margin-top:10px; background:url(../images/vedeotreebg.gif) bottom repeat-x #e5e7ea; }
+.Control { width:260px; height:177px; margin-top:10px; float:left; background: url(../images/Controlbg.gif); position: relative; z-index:1; }
+.Control .lft { width:30px; height:30px; position:absolute; left:35px; top:50px; z-index:100; cursor:pointer; }
+.Control .rht { width:30px; height:30px; position:absolute; left:100px; top:50px; z-index:101; cursor:pointer; }
+.Control .tp { width:30px; height:30px; position:absolute; left:67px; top:20px; z-index:102;  cursor:pointer;}
+.Control .btm { width:30px; height:30px; position:absolute; left:69px; top:85px; z-index:103;  cursor:pointer;}
+.Control .jia { width:30px; height:30px; position:absolute; left:27px; top:132px; z-index:104;  cursor:pointer;}
+.Control .jian { width:30px; height:30px; position:absolute; left:110px; top:133px; z-index:105;  cursor:pointer;}
+.Control .abtn { width:33px; height:16px; position:absolute; left:193px; top:73px; z-index:105;  cursor:pointer;}
+.videotreetlt { background:url(../images/videotreetle.gif) repeat-x; width:256px; margin-left:1px; height:27px; float:left; line-height:27px; margin-top:1px; }
+.videotreetlt p { padding-left:10px; color:#fff; }
+/*菜单树*/
+.dtree { margin:10px; text-align:left; background:#f0f6fb; border:solid 1px #809baf; overflow-y:auto; height:85%; float:left; width:240px;white-space: nowrap; }
+.dtree img { border: 0px; vertical-align: middle; }
+.dtree a { color: #333; text-decoration: none; }
+.dtree a.node, .dtree a.nodeSel { white-space: nowrap; padding: 1px 2px 1px 2px; }
+.dtree a.node:hover, .dtree a.nodeSel:hover { color: #333; text-decoration: underline; }
+.dtree a.nodeSel { background-color: #c0d2ec; }
+.dtree .clip { overflow: hidden; }/*按钮*/
+.videobtn { width:72px; height:31px; float:left; margin-left:10px; margin-top:8px; }
+.videobtn a { width:72px; height:31px; float:left; background:url(../images/videbtn1.gif) no-repeat; text-align:center; line-height:31px; color:#000 }
+.videobtn a:hover { width:72px; height:31px; float:left; background:url(../images/videbtn2.gif) no-repeat; text-align:center; line-height:31px; color:#000 }

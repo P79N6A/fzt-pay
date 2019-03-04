@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <!--  把数据写入消息队列 访问地址-->
+      <param key="url_queue">http://localhost:8080/yesway-queue/queue/sendQueue</param>
+</config>

@@ -1,0 +1,16 @@
+.div_ini{
+	display: none;
+	position: absolute;
+	width: 150px;
+	height: 100px;
+	background: #CCCCFF;
+	z-index: 10000;
+	border:2px groove pink;
+	padding:10px;
+}
+.divTag_ini{
+	width: 150px;
+	height: 100px;
+	background: red;
+	
+}

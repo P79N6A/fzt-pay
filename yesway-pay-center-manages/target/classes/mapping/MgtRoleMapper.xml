@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MgtRoleDao">
+
+	<resultMap id="RM_MgtRole" type="cn.yesway.bmw.manage.entity.MgtRole">
+        <result property="roleId" column="RoleId"/>
+        <result property="group" column="Group"/>
+        <result property="roleName" column="RoleName"/>
+        <result property="remark" column="Remark"/>
+        <result property="status" column="Status"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		RoleId,`Group`,RoleName,Remark,Status
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO MgtRole (
+	        	RoleId ,
+	        	`Group` ,
+	        	RoleName ,
+	        	Remark ,
+	        	Status 
+	        ) VALUES (
+	        	#{roleId} ,
+	        	#{group} ,
+	        	#{roleName} ,
+	        	#{remark} ,
+	        	#{status} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="group != null and group != ''">
+				`Group` = #{group} ,
+			</if>
+			<if test="roleName != null and roleName != ''">
+				RoleName = #{roleName} ,
+			</if>
+			<if test="remark != null and remark != ''">
+				Remark = #{remark} ,
+			</if>
+			<if test="status != null">
+				Status = #{status} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE MgtRole
+		<include refid="update_sql" />
+		WHERE
+			RoleId = #{roleId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM MgtRole 
+        	WHERE  RoleId = #{roleId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MgtRole">
+		SELECT
+		<include refid="columns" />
+		FROM MgtRole
+		WHERE  RoleId = #{roleId}  
+	</select>
+	
+		<!-- getByName -->
+	<select id="getByName" resultMap="RM_MgtRole">
+		SELECT
+		<include refid="columns" />
+		FROM MgtRole
+		WHERE  RoleName = #{roleName}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM MgtRole
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND RoleId = #{model.roleId}
+						</if>
+						<if test="model.group != null and model.group !=''">
+							AND `Group` = #{model.group}
+						</if>
+						<if test="model.roleName != null and model.roleName !=''">
+							AND RoleName = #{model.roleName}
+						</if>
+						<if test="model.remark != null and model.remark !=''">
+							AND Remark = #{model.remark}
+						</if>
+						<if test="model.status != null">
+							AND Status = #{model.status}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MgtRole">
+		SELECT
+		<include refid="columns" />
+		FROM  MgtRole
+		<where>
+					<if test="roleId != null and roleId !=''">
+						AND RoleId = #{roleId}
+					</if>
+					<if test="group != null and group !=''">
+						AND `Group` = #{group}
+					</if>
+					<if test="roleName != null and roleName !=''">
+						AND RoleName = #{roleName}
+					</if>
+					<if test="remark != null and remark !=''">
+						AND Remark = #{remark}
+					</if>
+					<if test="status != null">
+						AND Status = #{status}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MgtRole">
+		SELECT <include refid="columns" />
+		FROM MgtRole
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND RoleId = #{model.roleId}
+						</if>
+						<if test="model.group != null and model.group !=''">
+							AND `Group` = #{model.group}
+						</if>
+						<if test="model.roleName != null and model.roleName !=''">
+							AND RoleName = #{model.roleName}
+						</if>
+						<if test="model.remark != null and model.remark !=''">
+							AND Remark = #{model.remark}
+						</if>
+						<if test="model.status != null">
+							AND Status = #{model.status}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+	
+	
+	<select id="getRolesByUserId" resultMap="RM_MgtRole">
+		select
+		   *
+		from MgtUserRole mur
+		left join MgtRole mr on mur.RoleId=mr.RoleId
+		<where>
+			<if test="userId!=null and userId!=''">
+				mur.userId=#{userId}
+			</if>
+		</where>
+	</select>
+</mapper>

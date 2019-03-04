@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MgtMenuDao">
+
+	<resultMap id="RM_MgtMenu" type="cn.yesway.bmw.manage.entity.MgtMenu">
+        <result property="menuId" column="menuId"/>
+        <result property="menuName" column="menuName"/>
+        <result property="status" column="status"/>
+        <result property="parentId" column="parentId"/>
+        <result property="parentMenuUrl" column="parentMenuUrl"/>
+        <result property="type" column="type"/>
+        <result property="subMenu" column="subMenu"/>
+        <result property="icon" column="icon"/>
+        <result property="sort" column="sort"/>
+        <result property="createTime" column="createTime" />
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		menuId,menuName,status,parentId,parentMenuUrl,type,subMenu,icon,sort,createTime
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO MgtMenu (
+	        	menuId ,
+	        	menuName ,
+	        	status ,
+	        	parentId ,
+	        	parentMenuUrl ,
+	        	type ,
+	        	subMenu ,
+	        	icon ,
+	        	sort ,
+	        	createTime
+	        ) VALUES (
+	        	#{menuId} ,
+	        	#{menuName} ,
+	        	#{status} ,
+	        	#{parentId} ,
+	        	#{parentMenuUrl} ,
+	        	#{type} ,
+	        	#{subMenu} ,
+	        	#{icon} ,
+	        	#{sort}, 
+	        	#{createTime} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="menuName != null and menuName != ''">
+				menuName = #{menuName} ,
+			</if>
+			<if test="status != null">
+				status = #{status} ,
+			</if>
+			<if test="parentId != null and parentId != ''">
+				parentId = #{parentId} ,
+			</if>
+			<if test="parentMenuUrl != null and parentMenuUrl != ''">
+				parentMenuUrl = #{parentMenuUrl} ,
+			</if>
+			<if test="type != null">
+				type = #{type} ,
+			</if>
+			<if test="subMenu != null">
+				subMenu = #{subMenu} ,
+			</if>
+			<if test="icon != null and icon != ''">
+				icon = #{icon} ,
+			</if>
+			<if test="sort != null">
+				sort = #{sort} ,
+			</if>
+			<if test="createTime != null">
+				sort = #{createTime} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE MgtMenu
+		<include refid="update_sql" />
+		WHERE
+			menuId = #{menuId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM MgtMenu 
+        	WHERE  menuId = #{menuId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MgtMenu">
+		SELECT
+		<include refid="columns" />
+		FROM MgtMenu
+		WHERE  menuId = #{menuId}  
+	</select>
+    <!-- 获取最大ID值 -->
+    <select id="getMaxValuefromMenu" resultType="int">
+    SELECT MAX(menuId) FROM MgtMenu;
+    </select>
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM MgtMenu
+		<where>
+			<if test="model != null">
+						<if test="model.menuId != null and model.menuId !=''">
+							AND menuId = #{model.menuId}
+						</if>
+						<if test="model.menuName != null and model.menuName !=''">
+							AND menuName = #{model.menuName}
+						</if>
+						<if test="model.status != null">
+							AND status = #{model.status}
+						</if>
+						<if test="model.parentId != null and model.parentId !=''">
+							AND parentId = #{model.parentId}
+						</if>
+						<if test="model.parentMenuUrl != null and model.parentMenuUrl !=''">
+							AND parentMenuUrl = #{model.parentMenuUrl}
+						</if>
+						<if test="model.type != null">
+							AND type = #{model.type}
+						</if>
+						<if test="model.subMenu != null">
+							AND subMenu = #{model.subMenu}
+						</if>
+						<if test="model.icon != null and model.icon !=''">
+							AND icon = #{model.icon}
+						</if>
+						<if test="model.sort != null">
+							AND sort = #{model.sort}
+						</if>
+						<if test="model.createTime != null">
+							AND sort = #{model.createTime}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MgtMenu">
+		SELECT
+		<include refid="columns" />
+		FROM  MgtMenu 
+		<where>
+		             
+					<if test="menuId != null and menuId !=''">
+						AND menuId = #{menuId}
+					</if>
+					<if test="menuName != null and menuName !=''">
+						AND menuName = #{menuName}
+					</if>
+					<if test="status != null">
+						AND status = #{status}
+					</if>
+					<if test="parentId != null and parentId !=''">
+						AND parentId = #{parentId}
+					</if>
+					<if test="parentMenuUrl != null and parentMenuUrl !=''">
+						AND parentMenuUrl = #{parentMenuUrl}
+					</if>
+					<if test="type != null">
+						AND type = #{type}
+					</if>
+					<if test="subMenu != null">
+						AND subMenu = #{subMenu}
+					</if>
+					<if test="icon != null and icon !=''">
+						AND icon = #{icon}
+					</if>
+					<if test="sort != null">
+						AND sort = #{sort}
+					</if>
+					<if test="createTime != null">
+						AND createTime = #{createTime}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MgtMenu">
+		SELECT <include refid="columns" />
+		FROM MgtMenu
+		<where>
+			<if test="model != null">
+						<if test="model.menuId != null and model.menuId !=''">
+							AND menuId = #{model.menuId}
+						</if>
+						<if test="model.menuName != null and model.menuName !=''">
+							AND menuName = #{model.menuName}
+						</if>
+						<if test="model.status != null">
+							AND status = #{model.status}
+						</if>
+						<if test="model.parentId != null and model.parentId !=''">
+							AND parentId = #{model.parentId}
+						</if>
+						<if test="model.parentMenuUrl != null and model.parentMenuUrl !=''">
+							AND parentMenuUrl = #{model.parentMenuUrl}
+						</if>
+						<if test="model.type != null">
+							AND type = #{model.type}
+						</if>
+						<if test="model.subMenu != null">
+							AND subMenu = #{model.subMenu}
+						</if>
+						<if test="model.icon != null and model.icon !=''">
+							AND icon = #{model.icon}
+						</if>
+						<if test="model.sort != null">
+							AND sort = #{model.sort}
+						</if>
+						<if test="model.createTime != null">
+							AND createTime = #{model.createTime}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+<!-- 	根据角色查询所具有的权限信息 -->
+    <select id="queryLoadInfo" resultMap="RM_MgtMenu" parameterType="java.util.List">
+         Select
+         <include refid="columns" />
+         from MgtMenu 
+         where menuId in 
+         <foreach item="item" index="index" collection="list" open="("  
+             separator="," close=")">  
+             #{item}  
+         </foreach>  
+           ORDER BY sort
+   </select> 
+</mapper>

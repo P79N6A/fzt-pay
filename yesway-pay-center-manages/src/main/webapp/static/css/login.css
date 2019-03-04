@@ -1,0 +1,23 @@
+@charset "UTF-8";
+body { background:url(../images/loginbg.gif) repeat-x; width:819px; margin:0px auto; padding:0px auto; font-size:12px;}
+ul,li,form,p{list-style:none; padding:0px; margin:0px;}
+#loginlogo {padding-top:81px; height:140px; background:url(../images/logo.gif) no-repeat left 81px;}
+
+
+#logincontop{height:44px; background:url(../images/loginbg1.gif) no-repeat;}
+#logincon {height:217px; background:url(../images/loginconbg.jpg) no-repeat;}
+#loginform {padding-left:160px; }
+.loginway {padding-top:1px; clear:both; height:29px;}
+.loginway li { height:29px; padding:0px 19px; line-height:29px; float:left; color:#1d5595; border-right:1px solid #aabecb; cursor:pointer;}
+.loginway li.cur {color:#ef4f00; background:url(../images/loginoptioncur.gif) repeat-x; font-weight:bold; border-left:1px solid #fff}
+.formcon {padding-left:65px; padding-top:20px; font-size:14px;}
+#loginform2 { padding:20px;}
+.lineheight {margin-bottom:11px; clear:both; padding-bottom:24px\0;}
+.logintxt { width:188px;}
+
+.formtxt {height:25px; float:left;}
+.formtit {height:19px;width:51px; float:left; padding-top:5px;}
+.loginbtn { margin-top:10px;width:78px; height:29px; background:url(../images/loginbtnbg.gif) no-repeat; border:none; text-align:center; color:#000; font-size:14px;}
+
+#loginconbottom {height:49px; background:url(../images/loginbg2.gif) no-repeat;}
+#loginbottom {height:30px; line-height:30px; font-family:"微软雅黑","黑体"; color:#fff; font-size:14px; padding-left:28px;}

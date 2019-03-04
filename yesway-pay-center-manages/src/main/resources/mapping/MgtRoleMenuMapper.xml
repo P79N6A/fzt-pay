@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MgtRoleMenuDao">
+
+	<resultMap id="RM_MgtRoleMenu" type="cn.yesway.bmw.manage.entity.MgtRoleMenu">
+        <result property="roleId" column="roleId"/>
+        <result property="menuId" column="MenuId"/>
+        <result property="remark" column="remark"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		roleId,MenuId,remark
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO MgtRoleMenu (
+	        	roleId ,
+	        	MenuId ,
+	        	remark 
+	        ) VALUES (
+	        	#{roleId} ,
+	        	#{menuId} ,
+	        	#{remark} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="menuId != null and menuId != ''">
+				MenuId = #{menuId} ,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE MgtRoleMenu
+		<include refid="update_sql" />
+		WHERE
+			roleId = #{roleId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM MgtRoleMenu 
+        	WHERE  roleId = #{roleId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MgtRoleMenu">
+		SELECT
+		<include refid="columns" />
+		FROM MgtRoleMenu
+		WHERE  roleId = #{roleId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM MgtRoleMenu
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND roleId = #{model.roleId}
+						</if>
+						<if test="model.menuId != null and model.menuId !=''">
+							AND MenuId = #{model.menuId}
+						</if>
+						<if test="model.remark != null and model.remark !=''">
+							AND remark = #{model.remark}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MgtRoleMenu">
+		SELECT
+		<include refid="columns" />
+		FROM  MgtRoleMenu
+		<where>
+					<if test="roleId != null and roleId !=''">
+						AND roleId = #{roleId}
+					</if>
+					<if test="menuId != null and menuId !=''">
+						AND MenuId = #{menuId}
+					</if>
+					<if test="remark != null and remark !=''">
+						AND remark = #{remark}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MgtRoleMenu">
+		SELECT <include refid="columns" />
+		FROM MgtRoleMenu
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND roleId = #{model.roleId}
+						</if>
+						<if test="model.menuId != null and model.menuId !=''">
+							AND MenuId = #{model.menuId}
+						</if>
+						<if test="model.remark != null and model.remark !=''">
+							AND remark = #{model.remark}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version= "1.0" encoding ="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+        http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd 
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+        http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+	default-lazy-init="true">
+
+	<dubbo:application name="yesway-pay-center-thirdparty-callback"></dubbo:application>
+
+	<!-- 使用zookeeper广播注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper"
+		address="#{dubboConfig.registryAddress}" check="false"></dubbo:registry>
+
+	<!-- 配置服务调用 -->
+	<dubbo:reference id="orderService" interface="cn.yesway.pay.order.service.OrderService" version="0.1" timeout="10000"/>
+	<dubbo:reference id="queueService" interface="cn.yesway.pay.order.service.QueueService" version="0.1" timeout="10000"/>
+	<dubbo:reference id="configurationService" interface="cn.yesway.pay.order.service.ConfigurationService" version="0.1" timeout="10000"/>
+</beans>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"
+       default-lazy-init="true">
+    
+    <description>Shiro安全配置</description>
+	
+	<!-- 安全认证过滤器 -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<!-- shiro的核心安全接口 -->
+		<property name="securityManager" ref="securityManager" />
+		<!-- 要求登录时的链接 -->
+		<property name="loginUrl" value="/login.html" />
+		<!-- 登录成功后要跳转的连接 -->
+		<property name="successUrl" value="/index.html" />
+		<!-- 未授权时要跳转的连接 -->
+		<property name="unauthorizedUrl" value="/error403.html" />
+		<!-- shiro连接约束配置 -->
+		<property name="filterChainDefinitions">
+			<value>
+				# anon表示无授权即可访问
+				# authc表示验证通过后即可访问
+				# user表示验证通过或rememberme都可以访问
+				/aliStraightpaynotify/** = anon
+				/static/** = anon
+				/login = anon
+				/login.html = anon
+				/error*.html = anon
+				/index.jsp = anon
+				/ = anon
+				/** = authc 
+				/index.html = authc
+				/management/* = roles["admin"]X
+				/autonavi/setDestination.do = anon
+				<!-- /account/noauth.html = anon
+				/account/authc.html = authc
+				/account/add.html = perms["account:add"]
+				/account/update.html = perms["account:update"]
+				# 使用了注解的方式，在controller中配置
+				#/account/delete.html = perms["account:delete"]
+				/account/visit = perms["account:ajax"] -->
+			</value>
+		</property>
+		<property name="filters">
+			<map>
+				<entry key="authc" value-ref="authenticationFilter" />
+			</map>
+		</property>
+	</bean>
+    
+	<!-- 设定shiro的权限管理器 --> 
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="authenticationRealm" />
+		<property name="cacheManager" ref="shiroCacheManager" />
+	</bean>
+	
+	<!-- 设置自定义realm -->
+	<bean id="authenticationRealm" class="cn.yesway.bmw.manage.shiro.AuthenticationRealm" />
+	
+	<!-- 扩展的authc过滤器 -->
+	<bean id="authenticationFilter" class="cn.yesway.bmw.manage.shiro.AuthenticationFilter" />
+	
+	<!-- 缓存设置，不配置缓存的话，每次权限检查都会进入doGetAuthorizationInfo方法 -->
+	<bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" />
+
+	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+	
+</beans>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MgtUserRoleDao">
+
+	<resultMap id="RM_MgtUserRole" type="cn.yesway.bmw.manage.entity.MgtUserRole">
+        <result property="roleId" column="RoleId"/>
+        <result property="userId" column="UserId"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		RoleId,UserId
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO MgtUserRole (
+	        	RoleId ,
+	        	UserId 
+	        ) VALUES (
+	        	#{roleId} ,
+	        	#{userId} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE MgtUserRole
+		<include refid="update_sql" />
+		WHERE
+			RoleId = #{roleId}  AND
+			UserId = #{userId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM MgtUserRole 
+        	WHERE  RoleId = #{roleId} AND  UserId = #{userId}
+    	]]>
+	</delete>
+	
+	<!-- 根据USERID删除 -->
+	<delete id="deleteByUserId">
+    	<![CDATA[
+        	DELETE FROM MgtUserRole 
+        	WHERE UserId = #{userId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MgtUserRole">
+		SELECT
+		<include refid="columns" />
+		FROM MgtUserRole
+		WHERE  RoleId = #{roleId}  AND   UserId = #{userId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM MgtUserRole
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND RoleId = #{model.roleId}
+						</if>
+						<if test="model.userId != null and model.userId !=''">
+							AND UserId = #{model.userId}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MgtUserRole">
+		SELECT
+		<include refid="columns" />
+		FROM  MgtUserRole
+		<where>
+					<if test="roleId != null and roleId !=''">
+						AND RoleId = #{roleId}
+					</if>
+					<if test="userId != null and userId !=''">
+						AND UserId = #{userId}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MgtUserRole">
+		SELECT <include refid="columns" />
+		FROM MgtUserRole
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND RoleId = #{model.roleId}
+						</if>
+						<if test="model.userId != null and model.userId !=''">
+							AND UserId = #{model.userId}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

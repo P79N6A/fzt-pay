@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.RoleDao">
+
+	<resultMap id="RM_Role" type="cn.yesway.bmw.manage.entity.Role">
+        <result property="roleId" column="roleId"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleCode" column="roleCode"/>
+        <result property="status" column="status"/>
+        <result property="remark" column="remark"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		roleId,roleName,roleCode,status,remark
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO role (
+	        	roleId ,
+	        	roleName ,
+	        	roleCode ,
+	        	status ,
+	        	remark 
+	        ) VALUES (
+	        	#{roleId} ,
+	        	#{roleName} ,
+	        	#{roleCode} ,
+	        	#{status} ,
+	        	#{remark} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="roleName != null and roleName != ''">
+				roleName = #{roleName} ,
+			</if>
+			<if test="roleCode != null and roleCode != ''">
+				roleCode = #{roleCode} ,
+			</if>
+			<if test="status != null">
+				status = #{status} ,
+			</if>
+			<if test="remark != null and remark != ''">
+				remark = #{remark} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE role
+		<include refid="update_sql" />
+		WHERE
+			roleId = #{roleId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM role 
+        	WHERE  roleId = #{roleId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_Role">
+		SELECT
+		<include refid="columns" />
+		FROM role
+		WHERE  roleId = #{roleId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM role
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND roleId = #{model.roleId}
+						</if>
+						<if test="model.roleName != null and model.roleName !=''">
+							AND roleName = #{model.roleName}
+						</if>
+						<if test="model.roleCode != null and model.roleCode !=''">
+							AND roleCode = #{model.roleCode}
+						</if>
+						<if test="model.status != null">
+							AND status = #{model.status}
+						</if>
+						<if test="model.remark != null and model.remark !=''">
+							AND remark = #{model.remark}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_Role">
+		SELECT
+		<include refid="columns" />
+		FROM  role
+		<where>
+					<if test="roleId != null and roleId !=''">
+						AND roleId = #{roleId}
+					</if>
+					<if test="roleName != null and roleName !=''">
+						AND roleName = #{roleName}
+					</if>
+					<if test="roleCode != null and roleCode !=''">
+						AND roleCode = #{roleCode}
+					</if>
+					<if test="status != null">
+						AND status = #{status}
+					</if>
+					<if test="remark != null and remark !=''">
+						AND remark = #{remark}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_Role">
+		SELECT <include refid="columns" />
+		FROM role
+		<where>
+			<if test="model != null">
+						<if test="model.roleId != null and model.roleId !=''">
+							AND roleId = #{model.roleId}
+						</if>
+						<if test="model.roleName != null and model.roleName !=''">
+							AND roleName = #{model.roleName}
+						</if>
+						<if test="model.roleCode != null and model.roleCode !=''">
+							AND roleCode = #{model.roleCode}
+						</if>
+						<if test="model.status != null">
+							AND status = #{model.status}
+						</if>
+						<if test="model.remark != null and model.remark !=''">
+							AND remark = #{model.remark}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

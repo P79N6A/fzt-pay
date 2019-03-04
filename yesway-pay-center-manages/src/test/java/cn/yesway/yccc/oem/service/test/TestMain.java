@@ -1,0 +1,12 @@
+package cn.yesway.yccc.oem.service.test;
+
+public class TestMain {
+
+	public static void main(String[] args) {
+		String s1="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5Np95+nL9BXSArapfLWGAwKZEmYNmhbXKgc4jwIlyiTc58ZrgLXnv8Z0O/1sRAfA3krGek59X6MlmcijnYELhfU4DNPVxH2THY/ZSywghPnXv8YbZhA+pcjMg3rxrZPwSFC+rAXUC6AiRV4YWOssNGJkI4eY8Jeohm4HvlUVd9b1RiBgTnLmbBccRtPum2OYuCFHFN/cAdDjYT03zo59u/xhJgYXMTvm5KjRAPnz020u4XMYtvqfaeIG2QVgSpcB3hYW8zmuqaI9Z+xdReO3ss8MYX8cjIA+j8yGtXkjHMUXirfJtURjMEVdg58QcMlcPN03yWMUZGGcX15z/ul2QIDAQAB";
+		String s2="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg5Np95+nL9BXSArapfLWGAwKZEmYNmhbXKgc4jwIlyiTc58ZrgLXnv8Z0O/1sRAfA3krGek59X6MlmcijnYELhfU4DNPVxH2THY/ZSywghPnXv8YbZhA+pcjMg3rxrZPwSFC+rAXUC6AiRV4YWOssNGJkI4eY8Jeohm4HvlUVd9b1RiBgTnLmbBccRtPum2OYuCFHFN/cAdDjYT03zo59u/xhJgYXMTvm5KjRAPnz020u4XMYtvqfaeIG2QVgSpcB3hYW8zmuqaI9Z+xdReO3ss8MYX8cjIA+j8yGtXkjHMUXirfJtURjMEVdg58QcMlcPN03yWMUZGGcX15z/ul2QIDAQAB";
+	
+	    System.out.println(s1.equals(s2));
+	}
+
+}

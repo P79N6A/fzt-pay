@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MgtUserAuthorityDao">
+
+	<resultMap id="RM_MgtUserAuthority" type="cn.yesway.bmw.manage.entity.MgtUserAuthority">
+        <result property="authorityCode" column="AuthorityCode"/>
+        <result property="userId" column="UserId"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		AuthorityCode,UserId
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO MgtUserAuthority (
+	        	AuthorityCode ,
+	        	UserId 
+	        ) VALUES (
+	        	#{authorityCode} ,
+	        	#{userId} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE MgtUserAuthority
+		<include refid="update_sql" />
+		WHERE
+			AuthorityCode = #{authorityCode}  AND
+			UserId = #{userId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM MgtUserAuthority 
+        	WHERE  AuthorityCode = #{authorityCode} AND  UserId = #{userId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MgtUserAuthority">
+		SELECT
+		<include refid="columns" />
+		FROM MgtUserAuthority
+		WHERE  AuthorityCode = #{authorityCode}  AND   UserId = #{userId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM MgtUserAuthority
+		<where>
+			<if test="model != null">
+						<if test="model.authorityCode != null and model.authorityCode !=''">
+							AND AuthorityCode = #{model.authorityCode}
+						</if>
+						<if test="model.userId != null and model.userId !=''">
+							AND UserId = #{model.userId}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MgtUserAuthority">
+		SELECT
+		<include refid="columns" />
+		FROM  MgtUserAuthority
+		<where>
+					<if test="authorityCode != null and authorityCode !=''">
+						AND AuthorityCode = #{authorityCode}
+					</if>
+					<if test="userId != null and userId !=''">
+						AND UserId = #{userId}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MgtUserAuthority">
+		SELECT <include refid="columns" />
+		FROM MgtUserAuthority
+		<where>
+			<if test="model != null">
+						<if test="model.authorityCode != null and model.authorityCode !=''">
+							AND AuthorityCode = #{model.authorityCode}
+						</if>
+						<if test="model.userId != null and model.userId !=''">
+							AND UserId = #{model.userId}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>

@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="cn.yesway.bmw.manage.dao.MerchantsAuditDao">
+
+	<resultMap id="RM_MerchantsAudit" type="cn.yesway.bmw.manage.entity.MerchantsAudit">
+        <result property="externalId" column="external_id"/>
+        <result property="appId" column="app_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="smId" column="sm_id"/>
+        <result property="cardAliasNo" column="card_alias_no"/>
+        <result property="memo" column="memo"/>
+        <result property="reason" column="reason"/>
+        <result property="merchants" column="merchants"/>
+        <result property="phone" column="phone"/>
+        <result property="addTime" column="add_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="auditStatus" column="audit_status"/>
+        <result property="businessStatus" column="business_status"/>
+        <result property="isDelete" column="is_delete"/>
+        <result property="userId" column="user_id"/>
+        <result property="auditContext" column="audit_context"/>
+	</resultMap>
+	
+	<!-- 用于select查询公用抽取的列 -->
+	<sql id="columns">
+	    <![CDATA[
+		external_id,app_id,order_id,sm_id,card_alias_no,memo,reason,merchants,phone,add_time,update_time,audit_status,business_status,is_delete,user_id,audit_context
+	    ]]>
+	</sql>
+
+	<!--保存 -->
+	<insert id="save">
+	    <![CDATA[
+	        INSERT INTO merchants_audit (
+	        	external_id ,
+	        	app_id ,
+	        	order_id ,
+	        	sm_id ,
+	        	card_alias_no ,
+	        	memo ,
+	        	reason ,
+	        	merchants ,
+	        	phone ,
+	        	add_time ,
+	        	update_time ,
+	        	audit_status ,
+	        	business_status ,
+	        	is_delete ,
+	        	user_id ,
+	        	audit_context 
+	        ) VALUES (
+	        	#{externalId} ,
+	        	#{appId} ,
+	        	#{orderId} ,
+	        	#{smId} ,
+	        	#{cardAliasNo} ,
+	        	#{memo} ,
+	        	#{reason} ,
+	        	#{merchants} ,
+	        	#{phone} ,
+	        	#{addTime} ,
+	        	#{updateTime} ,
+	        	#{auditStatus} ,
+	        	#{businessStatus} ,
+	        	#{isDelete} ,
+	        	#{userId} ,
+	        	#{auditContext} 
+	        )
+	    ]]>
+	</insert>
+	
+	<!-- update 条件组合 -->
+	<sql id="update_sql">
+		<set>
+			<if test="appId != null and appId != ''">
+				app_id = #{appId} ,
+			</if>
+			<if test="orderId != null and orderId != ''">
+				order_id = #{orderId} ,
+			</if>
+			<if test="smId != null and smId != ''">
+				sm_id = #{smId} ,
+			</if>
+			<if test="cardAliasNo != null and cardAliasNo != ''">
+				card_alias_no = #{cardAliasNo} ,
+			</if>
+			<if test="memo != null and memo != ''">
+				memo = #{memo} ,
+			</if>
+			<if test="reason != null and reason != ''">
+				reason = #{reason} ,
+			</if>
+			<if test="merchants != null and merchants != ''">
+				merchants = #{merchants} ,
+			</if>
+			<if test="phone != null and phone != ''">
+				phone = #{phone} ,
+			</if>
+			<if test="addTime != null">
+				add_time = #{addTime} ,
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime} ,
+			</if>
+			<if test="auditStatus != null">
+				audit_status = #{auditStatus} ,
+			</if>
+			<if test="businessStatus != null">
+				business_status = #{businessStatus} ,
+			</if>
+			<if test="isDelete != null">
+				is_delete = #{isDelete} ,
+			</if>
+			<if test="userId != null and userId != ''">
+				user_id = #{userId} ,
+			</if>
+			<if test="auditContext != null and auditContext != ''">
+				audit_context = #{auditContext} 
+			</if>
+		</set>
+	</sql>
+	
+	<!-- 修改 -->
+	<update id="update">
+		UPDATE merchants_audit
+		<include refid="update_sql" />
+		WHERE
+			external_id = #{externalId} 	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="delete">
+    	<![CDATA[
+        	DELETE FROM merchants_audit 
+        	WHERE  external_id = #{externalId}
+    	]]>
+	</delete>
+	
+	<!-- getById -->
+	<select id="getById" resultMap="RM_MerchantsAudit">
+		SELECT
+		<include refid="columns" />
+		FROM merchants_audit
+		WHERE  external_id = #{externalId}  
+	</select>
+
+	<!-- 获取总数 -->
+	<select id="getTotalCount" resultType="int">
+		SELECT COUNT(1)
+		FROM merchants_audit
+		<where>
+			<if test="model != null">
+						<if test="model.externalId != null and model.externalId !=''">
+							AND external_id = #{model.externalId}
+						</if>
+						<if test="model.appId != null and model.appId !=''">
+							AND app_id = #{model.appId}
+						</if>
+						<if test="model.orderId != null and model.orderId !=''">
+							AND order_id = #{model.orderId}
+						</if>
+						<if test="model.smId != null and model.smId !=''">
+							AND sm_id = #{model.smId}
+						</if>
+						<if test="model.cardAliasNo != null and model.cardAliasNo !=''">
+							AND card_alias_no = #{model.cardAliasNo}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND memo = #{model.memo}
+						</if>
+						<if test="model.reason != null and model.reason !=''">
+							AND reason = #{model.reason}
+						</if>
+						<if test="model.merchants != null and model.merchants !=''">
+							AND merchants = #{model.merchants}
+						</if>
+						<if test="model.phone != null and model.phone !=''">
+							AND phone = #{model.phone}
+						</if>
+						<if test="model.addTime != null">
+							AND add_time = #{model.addTime}
+						</if> 
+						<if test="model.updateTime != null">
+							AND update_time = #{model.updateTime}
+						</if> 
+						<if test="model.auditStatus != null">
+							AND audit_status = #{model.auditStatus}
+						</if>
+						<if test="model.businessStatus != null">
+							AND business_status = #{model.businessStatus}
+						</if>
+						<if test="model.isDelete != null">
+							AND is_delete = #{model.isDelete}
+						</if>
+						<if test="model.userId != null and model.userId !=''">
+							AND user_id = #{model.userId}
+						</if>
+						<if test="model.auditContext != null and model.auditContext !=''">
+							AND audit_context = #{model.auditContext}
+						</if>
+			</if>
+		</where>
+	</select>  
+	
+	<!-- 按条件组合搜索列表  -->
+	<select id="findList" resultMap="RM_MerchantsAudit">
+		SELECT
+		<include refid="columns" />
+		FROM  merchants_audit
+		<where>
+					<if test="externalId != null and externalId !=''">
+						AND external_id = #{externalId}
+					</if>
+					<if test="appId != null and appId !=''">
+						AND app_id = #{appId}
+					</if>
+					<if test="orderId != null and orderId !=''">
+						AND order_id = #{orderId}
+					</if>
+					<if test="smId != null and smId !=''">
+						AND sm_id = #{smId}
+					</if>
+					<if test="cardAliasNo != null and cardAliasNo !=''">
+						AND card_alias_no = #{cardAliasNo}
+					</if>
+					<if test="memo != null and memo !=''">
+						AND memo = #{memo}
+					</if>
+					<if test="reason != null and reason !=''">
+						AND reason = #{reason}
+					</if>
+					<if test="merchants != null and merchants !=''">
+						AND merchants = #{merchants}
+					</if>
+					<if test="phone != null and phone !=''">
+						AND phone = #{phone}
+					</if>
+					<if test="addTime != null">
+						AND add_time = #{addTime}
+					</if>
+					<if test="updateTime != null">
+						AND update_time = #{updateTime}
+					</if>
+					<if test="auditStatus != null">
+						AND audit_status = #{auditStatus}
+					</if>
+					<if test="businessStatus != null">
+						AND business_status = #{businessStatus}
+					</if>
+					<if test="isDelete != null">
+						AND is_delete = #{isDelete}
+					</if>
+					<if test="userId != null and userId !=''">
+						AND user_id = #{userId}
+					</if>
+					<if test="auditContext != null and auditContext !=''">
+						AND audit_context = #{auditContext}
+					</if>
+		</where>
+		<if test="sortColumns != null and sortColumns !=''">
+			ORDER BY #{sortColumns}
+		</if>
+	</select>
+
+	<!-- 分页 -->
+	<select id="findPageList" resultMap="RM_MerchantsAudit">
+		SELECT <include refid="columns" />
+		FROM merchants_audit
+		<where>
+			<if test="model != null">
+						<if test="model.externalId != null and model.externalId !=''">
+							AND external_id = #{model.externalId}
+						</if>
+						<if test="model.appId != null and model.appId !=''">
+							AND app_id = #{model.appId}
+						</if>
+						<if test="model.orderId != null and model.orderId !=''">
+							AND order_id = #{model.orderId}
+						</if>
+						<if test="model.smId != null and model.smId !=''">
+							AND sm_id = #{model.smId}
+						</if>
+						<if test="model.cardAliasNo != null and model.cardAliasNo !=''">
+							AND card_alias_no = #{model.cardAliasNo}
+						</if>
+						<if test="model.memo != null and model.memo !=''">
+							AND memo = #{model.memo}
+						</if>
+						<if test="model.reason != null and model.reason !=''">
+							AND reason = #{model.reason}
+						</if>
+						<if test="model.merchants != null and model.merchants !=''">
+							AND merchants = #{model.merchants}
+						</if>
+						<if test="model.phone != null and model.phone !=''">
+							AND phone = #{model.phone}
+						</if>
+						<if test="model.addTime != null">
+							AND add_time = #{model.addTime}
+						</if>
+						<if test="model.updateTime != null">
+							AND update_time = #{model.updateTime}
+						</if>
+						<if test="model.auditStatus != null">
+							AND audit_status = #{model.auditStatus}
+						</if>
+						<if test="model.businessStatus != null">
+							AND business_status = #{model.businessStatus}
+						</if>
+						<if test="model.isDelete != null">
+							AND is_delete = #{model.isDelete}
+						</if>
+						<if test="model.userId != null and model.userId !=''">
+							AND user_id = #{model.userId}
+						</if>
+						<if test="model.auditContext != null and model.auditContext !=''">
+							AND audit_context = #{model.auditContext}
+						</if>
+			</if>
+		</where>
+		limit 
+		<choose>
+			<when test="pager != null">
+				#{pager.begin},#{pager.pageSize}
+			</when>
+			<otherwise>
+				0,10
+			</otherwise>
+		</choose>
+	</select>
+
+</mapper>
